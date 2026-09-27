@@ -24,7 +24,7 @@ export const footer: FooterContent = {
     {
       title: "Company",
       links: [
-        { label: "Work", href: "/#work" },
+        { label: "Work", href: "/portfolio" },
         { label: "Process", href: "/#process" },
         { label: "Pricing", href: "/#pricing" },
         { label: "FAQ", href: "/#faq" },

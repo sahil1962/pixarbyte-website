@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Fragment, type ReactNode } from "react";
 import { Cta } from "@/components/sections/Cta";
@@ -56,6 +57,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: service.seo.description,
       path: `/services/${slug}`,
       site,
+      image: null,
     }),
     keywords: service.seo.keywords,
   };
@@ -139,7 +141,17 @@ export default async function ServicePage({ params }: Props) {
           {
             key: "work",
             render: (tint: boolean) => (
-              <PageSection id="work" title={copy.projectsTitle} intro={fill(copy.projectsIntro, { name })} tint={tint}>
+              <PageSection
+                id="work"
+                title={copy.projectsTitle}
+                intro={fill(copy.projectsIntro, { name })}
+                tint={tint}
+                aside={
+                  <Link href={`/portfolio?service=${service.slug}`} className="btn btn-outline">
+                    {copy.projectsAll}
+                  </Link>
+                }
+              >
                 <CaseGrid section={work.section} caseStudies={projects} />
               </PageSection>
             ),

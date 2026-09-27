@@ -6,7 +6,8 @@ const DEFAULT_OG_IMAGE = "/opengraph-image";
 /**
  * Page metadata with a canonical URL and full Open Graph/Twitter fields. Page-level
  * `openGraph` replaces the layout's rather than merging with it, so site name, locale and
- * type are repeated here. Images come from the nearest `opengraph-image` file unless given.
+ * type are repeated here. Without `image` the site default is named; pass `image: null` on routes
+ * with their own `opengraph-image` file so that file is used instead.
  */
 export function buildMetadata({
   title,
@@ -20,7 +21,7 @@ export function buildMetadata({
   description: string;
   path: string;
   site: SiteConfig;
-  image?: string;
+  image?: string | null;
   type?: "website" | "article";
 }): Metadata {
   return {
@@ -34,10 +35,14 @@ export function buildMetadata({
       title,
       description,
       url: path,
-      // Page-level openGraph drops the inherited default image, so name it. A route's own
-      // opengraph-image file still takes priority over this.
-      images: [image ?? DEFAULT_OG_IMAGE],
+      // Page-level openGraph drops the inherited default image, so name it.
+      ...(image === null ? {} : { images: [image ?? DEFAULT_OG_IMAGE] }),
     },
-    twitter: { card: "summary_large_image", title, description, images: [image ?? DEFAULT_OG_IMAGE] },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(image === null ? {} : { images: [image ?? DEFAULT_OG_IMAGE] }),
+    },
   };
 }

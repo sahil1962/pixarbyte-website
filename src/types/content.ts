@@ -297,21 +297,29 @@ export interface AudienceSectionContent extends SectionCopy {
 
 export type WorkFilter = "all" | "web" | "mobile" | "cloud" | "nocode";
 
+/**
+ * A case study as the cards and the home dialog need it: serialisable, built from the MDX
+ * frontmatter in content/case-studies by `toCaseStudy` (src/lib/portfolio.ts).
+ */
 export interface CaseStudy {
-  id: string;
+  slug: string;
+  href: string;
   filter: Exclude<WorkFilter, "all">;
-  /** Services involved, used for "Related work" on service pages. */
+  /** Services involved, used for filters and "Related work" on service pages. */
   services: ServiceSlug[];
+  industry: string;
   client: string;
   location: string;
   title: string;
+  summary: string;
   tags: string[];
+  concept: boolean;
   colors: { c1: string; c2: string };
   mock: "phone" | "browser" | "term";
   stats: { value: string; label: string }[];
   challenge: string;
   solution: string;
-  quote: { text: string; cite: string };
+  quote?: { text: string; cite: string };
 }
 
 export interface WorkSectionContent extends SectionCopy {
@@ -322,7 +330,14 @@ export interface WorkSectionContent extends SectionCopy {
   openAriaPrefix: string;
   terminalMock: string[];
   ctaCard: { title: string; text: string; button: string };
-  dialog: { challenge: string; solution: string; cta: string; close: string; closeAriaLabel: string };
+  dialog: {
+    challenge: string;
+    solution: string;
+    cta: string;
+    more: string;
+    close: string;
+    closeAriaLabel: string;
+  };
   /** Which estimator tab "Start a similar project" opens for each filter. */
   estimateFor: Record<CaseStudy["filter"], ProjectType>;
 }
@@ -349,7 +364,10 @@ export interface ProcessSectionContent extends SectionCopy {
 export interface Stat {
   value: number;
   decimals?: number;
+  prefix?: string;
   suffix?: string;
+  /** Group thousands with commas (2,000). */
+  group?: boolean;
   label: string;
 }
 

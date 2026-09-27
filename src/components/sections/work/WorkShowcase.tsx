@@ -1,16 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState, type RefObject } from "react";
 import type { CaseStudy, WorkFilter, WorkSectionContent } from "@/types/content";
 import { Icon } from "@/components/shared/Icon";
 import { Segmented } from "@/components/shared/Segmented";
 import { useSite } from "@/components/layout/SiteProvider";
-import { prefersReducedMotion, useModalDialog, useOnView } from "@/lib/hooks";
+import { useModalDialog } from "@/lib/hooks";
 import { CaseVisual } from "./CaseMock";
-
-/** Pixels lit on the "Your project could be next" card (a small P). */
-const DECO_ON = [0, 1, 2, 6, 8, 12, 13, 14];
-const DECO_COUNT = 18;
+import { CtaCard } from "./CtaCard";
 
 /**
  * Case study cards, the "Your project could be next" card and the case study dialog.
@@ -22,24 +20,19 @@ export function CaseGrid({
   filter = "all",
   run = 0,
   gridRef,
+  decoId,
 }: {
   section: WorkSectionContent;
   caseStudies: CaseStudy[];
   filter?: WorkFilter;
   run?: number;
   gridRef?: RefObject<HTMLDivElement | null>;
+  decoId?: string;
 }) {
   const { openEstimate } = useSite();
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [shownIdx, setShownIdx] = useState(0);
   const dialog = useModalDialog(openIdx !== null);
-
-  const ctaCard = useRef<HTMLDivElement>(null);
-  const [lit, setLit] = useState<number[]>([]);
-  useOnView(ctaCard, (visible) => {
-    if (!visible || prefersReducedMotion()) return;
-    DECO_ON.forEach((i) => setTimeout(() => setLit((cur) => (cur.includes(i) ? cur : [...cur, i])), i * 40));
-  });
 
   function openCase(i: number) {
     setShownIdx(i);
@@ -56,7 +49,7 @@ export function CaseGrid({
           // A new key restarts the entrance animation for every card a filter shows.
           return (
             <button
-              key={show ? `${c.id}-${run}` : c.id}
+              key={show ? `${c.slug}-${run}` : c.slug}
               type="button"
               className={show ? (run > 0 ? "case enter" : "case") : "case hide"}
               data-f={c.filter}
@@ -83,20 +76,7 @@ export function CaseGrid({
             </button>
           );
         })}
-        <div className="case cta-card" ref={ctaCard}>
-          <div>
-            <div className="pix-deco" id="pix-deco" aria-hidden="true">
-              {Array.from({ length: DECO_COUNT }, (_, i) => (
-                <i key={i} className={lit.includes(i) ? "on" : undefined} />
-              ))}
-            </div>
-            <h3>{section.ctaCard.title}</h3>
-            <p>{section.ctaCard.text}</p>
-          </div>
-          <button className="btn btn-primary" type="button" onClick={() => openEstimate()}>
-            {section.ctaCard.button}
-          </button>
-        </div>
+        <CtaCard content={section.ctaCard} decoId={decoId} />
       </div>
 
       <dialog
@@ -151,10 +131,12 @@ export function CaseGrid({
               <p id="cd-solution">{study.solution}</p>
             </div>
           </div>
-          <blockquote className="cd-quote" id="cd-quote">
-            {`“${study.quote.text}”`}
-            <footer>{study.quote.cite}</footer>
-          </blockquote>
+          {study.quote && (
+            <blockquote className="cd-quote" id="cd-quote">
+              {`“${study.quote.text}”`}
+              <footer>{study.quote.cite}</footer>
+            </blockquote>
+          )}
           <div className="cd-actions">
             <button
               className="btn btn-primary"
@@ -167,6 +149,9 @@ export function CaseGrid({
             >
               {section.dialog.cta}
             </button>
+            <Link className="btn btn-outline" href={study.href}>
+              {section.dialog.more}
+            </Link>
             <button className="btn btn-outline" type="button" onClick={() => setOpenIdx(null)}>
               {section.dialog.close}
             </button>
@@ -204,7 +189,14 @@ export function WorkShowcase({ section, caseStudies }: { section: WorkSectionCon
           onChange={applyFilter}
         />
       </div>
-      <CaseGrid section={section} caseStudies={caseStudies} filter={filter} run={run} gridRef={grid} />
+      <CaseGrid
+        section={section}
+        caseStudies={caseStudies}
+        filter={filter}
+        run={run}
+        gridRef={grid}
+        decoId="pix-deco"
+      />
     </>
   );
 }

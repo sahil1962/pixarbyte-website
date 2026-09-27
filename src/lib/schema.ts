@@ -1,5 +1,6 @@
 import type { FAQ, SiteConfig } from "@/types/content";
 import type { Service } from "@/types/service";
+import type { CaseStudyMeta } from "./validation/case-study";
 
 export function organizationSchema(site: SiteConfig) {
   return {
@@ -84,5 +85,25 @@ export function serviceListSchema(site: SiteConfig, services: Service[]) {
       name: s.name,
       url: `${site.url}/services/${s.slug}`,
     })),
+  };
+}
+
+export function creativeWorkSchema(site: SiteConfig, m: CaseStudyMeta) {
+  const url = `${site.url}/portfolio/${m.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: m.title,
+    headline: m.title,
+    description: m.summary,
+    image: new URL(m.cover, site.url).toString(),
+    dateCreated: m.date,
+    creator: { "@type": "Organization", name: site.name, url: site.url },
+    ...(m.confidential ? {} : { sourceOrganization: { "@type": "Organization", name: m.client } }),
+    about: m.industry,
+    keywords: m.tech.join(", "),
+    inLanguage: "en-GB",
+    url,
+    mainEntityOfPage: url,
   };
 }

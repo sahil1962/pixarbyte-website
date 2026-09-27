@@ -4,24 +4,29 @@ import { useEffect, useRef } from "react";
 import type { Stat } from "@/types/content";
 import { easeOutCubic } from "@/lib/format";
 import { prefersReducedMotion, useOnView } from "@/lib/hooks";
+import { cn } from "@/lib/utils";
 
-const format = (s: Stat, v: number) => v.toFixed(s.decimals ?? 0) + (s.suffix ?? "");
+const format = (s: Stat, v: number) => {
+  const d = s.decimals ?? 0;
+  const n = s.group ? v.toLocaleString("en-GB", { minimumFractionDigits: d, maximumFractionDigits: d }) : v.toFixed(d);
+  return (s.prefix ?? "") + n + (s.suffix ?? "");
+};
 
 /**
  * Headline numbers that count up once when scrolled into view. The server renders the final
  * values (so they read correctly without JavaScript); the count resets to 0 on hydration.
  */
-export function StatGrid({ stats }: { stats: Stat[] }) {
+export function StatGrid({ stats, id = "stats", className }: { stats: Stat[]; id?: string; className?: string }) {
   const grid = useRef<HTMLDivElement>(null);
   const values = useRef<(HTMLElement | null)[]>([]);
   const done = useRef(false);
 
   useEffect(() => {
     if (done.current || prefersReducedMotion()) return;
-    values.current.forEach((el) => {
-      if (el) el.textContent = "0";
+    values.current.forEach((el, i) => {
+      if (el) el.textContent = stats[i].prefix || stats[i].group ? format(stats[i], 0) : "0";
     });
-  }, []);
+  }, [stats]);
 
   useOnView(
     grid,
@@ -46,7 +51,7 @@ export function StatGrid({ stats }: { stats: Stat[] }) {
   );
 
   return (
-    <div className="stat-grid" id="stats" ref={grid}>
+    <div className={cn("stat-grid", className)} id={id} ref={grid}>
       {stats.map((s, i) => (
         <div className="stat" key={s.label}>
           <strong

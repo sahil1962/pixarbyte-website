@@ -17,6 +17,7 @@ export function PageHero({
   crumbs,
   crumbsLabel,
   site,
+  meta,
   actions,
   aside,
 }: {
@@ -25,6 +26,8 @@ export function PageHero({
   crumbs: Crumb[];
   crumbsLabel: string;
   site: SiteConfig;
+  /** Shown between the lead and the actions, e.g. client and service badges. */
+  meta?: ReactNode;
   actions?: ReactNode;
   aside?: ReactNode;
 }) {
@@ -38,6 +41,7 @@ export function PageHero({
           {/* No reserved height: that's only needed on the home hero, where the copy swaps. */}
           <RevealHeading text={title} className="min-h-0" />
           <p className="lead min-h-0">{intro}</p>
+          {meta}
           {actions && <div className="cta-row">{actions}</div>}
         </div>
         {aside && (
