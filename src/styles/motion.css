@@ -1,0 +1,31 @@
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Marquees become static rows: no duplicate set, no edge fade on the logos, wrapped chips for tech. */
+  [data-marquee-clone] {
+    display: none !important;
+  }
+  .marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .logo-row.track {
+    flex-wrap: wrap;
+    width: auto;
+    gap: 28px;
+  }
+  .tech-track {
+    flex-wrap: wrap;
+    width: auto;
+  }
+  .tech-row {
+    padding: 0 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,127 @@
+/* nav */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--background) 82%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  backdrop-filter: saturate(1.4) blur(10px);
+}
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+.brand-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--primary);
+  display: grid;
+  grid-template-columns: repeat(2, 5px);
+  grid-template-rows: repeat(2, 5px);
+  gap: 2px;
+  place-content: center;
+}
+.brand-mark i {
+  background: var(--primary-foreground);
+  border-radius: 1px;
+}
+.brand-mark i:nth-child(4) {
+  background: var(--accent);
+}
+.nav-links {
+  display: flex;
+  gap: 2px;
+}
+.nav-links a {
+  font-size: 14px;
+  color: var(--muted-foreground);
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+.nav-links a:hover {
+  color: var(--foreground);
+  background: var(--muted);
+}
+.nav-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+  align-items: center;
+}
+.search {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  width: 220px;
+  padding: 0 6px 0 12px;
+  border: 1px solid var(--input);
+  border-radius: 8px;
+  background: var(--muted-2);
+  color: var(--muted-foreground);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.search:hover {
+  border-color: var(--ring);
+}
+.search .kbd {
+  margin-left: auto;
+}
+.theme-btn .sun {
+  display: none;
+}
+:root[data-theme="dark"] .theme-btn .sun {
+  display: block;
+}
+:root[data-theme="dark"] .theme-btn .moon {
+  display: none;
+}
+@media (max-width: 1020px) {
+  .nav-links {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .search {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+  .search span,
+  .search .kbd {
+    display: none;
+  }
+  .nav-actions .btn-primary {
+    display: none;
+  }
+}
+
+/* mobile menu */
+.menu-btn {
+  display: none;
+}
+@media (max-width: 1020px) {
+  .menu-btn {
+    display: inline-flex;
+  }
+}
