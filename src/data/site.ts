@@ -19,13 +19,14 @@ export const siteConfig: SiteConfig = {
 
 export const header: HeaderContent = {
   nav: [
-    { label: "Services", href: "#services" },
-    { label: "Work", href: "#work" },
-    { label: "Process", href: "#process" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Services", href: "/services" },
+    { label: "Work", href: "/#work" },
+    { label: "Process", href: "/#process" },
+    { label: "Pricing", href: "/#pricing" },
+    { label: "FAQ", href: "/#faq" },
   ],
   navLabel: "Main",
+  allServicesLabel: "All services",
   search: {
     label: "Search or jump to",
     ariaLabel: "Search and quick actions",
@@ -41,12 +42,12 @@ export const mobileMenu: MobileMenuContent = {
   navLabel: "Mobile",
   closeAriaLabel: "Close menu",
   links: [
-    { label: "Services", href: "#services" },
-    { label: "Work", href: "#work" },
-    { label: "Process", href: "#process" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Contact", href: "#contact" },
+    { label: "Services", href: "/services" },
+    { label: "Work", href: "/#work" },
+    { label: "Process", href: "/#process" },
+    { label: "Pricing", href: "/#pricing" },
+    { label: "FAQ", href: "/#faq" },
+    { label: "Contact", href: "/#contact" },
   ],
   primaryCta: "Get a quick estimate",
   secondaryCta: "Book a 30-minute call",

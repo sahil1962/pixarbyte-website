@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { MobileMenuContent, SiteConfig } from "@/types/content";
 import { BrandMark } from "@/components/shared/Brand";
 import { Icon } from "@/components/shared/Icon";
@@ -24,19 +25,19 @@ export function MobileMenu({ content, site }: { content: MobileMenuContent; site
       }}
     >
       <div className="menu-top">
-        <a className="brand" href="#top" aria-label={site.brandAriaLabel} onClick={close}>
+        <Link className="brand" href="/" aria-label={site.brandAriaLabel} onClick={close}>
           <BrandMark />
           {site.name}
-        </a>
+        </Link>
         <button className="btn btn-ghost btn-icon" type="button" aria-label={content.closeAriaLabel} onClick={close}>
           <Icon name="x" />
         </button>
       </div>
       <nav className="menu-links" aria-label={content.navLabel}>
         {content.links.map((l) => (
-          <a key={l.href} href={l.href} onClick={close}>
+          <Link key={l.href} href={l.href} onClick={close}>
             {l.label}
-          </a>
+          </Link>
         ))}
       </nav>
       <div className="menu-foot">

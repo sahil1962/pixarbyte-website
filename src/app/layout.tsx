@@ -19,6 +19,7 @@ import {
   getHero,
   getMessages,
   getMobileMenu,
+  getServices,
   getSiteConfig,
 } from "@/lib/content";
 import { organizationSchema } from "@/lib/schema";
@@ -51,7 +52,7 @@ export const viewport: Viewport = {
 const themeInit = `(function(){try{var d=document.documentElement;if(!d.dataset.theme)d.dataset.theme=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}catch(e){}})()`;
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [site, header, mobileMenu, footer, hero, estimator, commandMenu, messages] = await Promise.all([
+  const [site, header, mobileMenu, footer, hero, estimator, commandMenu, messages, services] = await Promise.all([
     getSiteConfig(),
     getHeader(),
     getMobileMenu(),
@@ -60,7 +61,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     getEstimator(),
     getCommandMenu(),
     getMessages(),
+    getServices(),
   ]);
+  const serviceLinks = services.map((s) => ({ label: s.navLabel, href: `/services/${s.slug}` }));
 
   return (
     <html lang="en-GB" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
@@ -73,7 +76,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <a href="#main" className="btn btn-primary skip-link">
             {site.skipLink}
           </a>
-          <Header content={header} site={site} />
+          <Header content={header} site={site} services={serviceLinks} />
           <main id="main">{children}</main>
           <Footer content={footer} site={site} />
           <MobileMenu content={mobileMenu} site={site} />

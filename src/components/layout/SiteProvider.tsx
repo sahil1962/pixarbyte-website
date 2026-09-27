@@ -31,6 +31,8 @@ interface SiteContextValue {
 
   builder: RefObject<BuilderHandle | null>;
   registerBuilder(handle: BuilderHandle | null): void;
+  /** What estimate buttons without a type price on this page (when there's no builder). */
+  setPageEstimateType(type: ProjectType | null): void;
 
   estimate: { open: boolean; type: ProjectType; session: number };
   openEstimate(type?: ProjectType | null): void;
@@ -72,6 +74,7 @@ export function SiteProvider({
   children: ReactNode;
 }) {
   const builder = useRef<BuilderHandle | null>(null);
+  const pageEstimateType = useRef<ProjectType | null>(null);
   const [audience, setAudience] = useState<Audience>(defaultAudience);
   const [estimate, setEstimate] = useState<SiteContextValue["estimate"]>({ open: false, type: "website", session: 0 });
   const [commandOpen, setCommandOpen] = useState(false);
@@ -84,7 +87,7 @@ export function SiteProvider({
   const openEstimate = useCallback((type?: ProjectType | null) => {
     setMenuOpen(false);
     builder.current?.stopAutoplay();
-    const t = type ?? builder.current?.currentKey() ?? "website";
+    const t = type ?? builder.current?.currentKey() ?? pageEstimateType.current ?? "website";
     setEstimate((e) => ({ open: true, type: t, session: e.session + 1 }));
   }, []);
 
@@ -108,6 +111,9 @@ export function SiteProvider({
       builder,
       registerBuilder: (handle) => {
         builder.current = handle;
+      },
+      setPageEstimateType: (type) => {
+        pageEstimateType.current = type;
       },
       estimate,
       openEstimate,

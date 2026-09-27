@@ -50,7 +50,7 @@ export function AutomationsVisual({ items }: Extract<ServiceVisual, { kind: "aut
 /** Cloud card: UK region with traffic pulsing out to its neighbours (pure CSS). */
 export function RegionsVisual({ paths, regions }: Extract<ServiceVisual, { kind: "regions" }>) {
   return (
-    <div className="svc-vis vis-cloud" id="vis-cloud" aria-hidden="true">
+    <div className="svc-vis vis-cloud" aria-hidden="true">
       <svg preserveAspectRatio="none" viewBox="0 0 100 100">
         {paths.map((d) => (
           <path key={`line-${d}`} className="rline" d={d} vectorEffect="non-scaling-stroke" />

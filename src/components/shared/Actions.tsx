@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import type { ProjectType } from "@/types/content";
 import { useSite } from "@/components/layout/SiteProvider";
 
@@ -66,4 +66,14 @@ export function ActionLink({
       {children}
     </a>
   );
+}
+
+/** Sets which project type the estimate dialog opens on for this page. Renders nothing. */
+export function PageEstimateType({ type }: { type: ProjectType }) {
+  const { setPageEstimateType } = useSite();
+  useEffect(() => {
+    setPageEstimateType(type);
+    return () => setPageEstimateType(null);
+  }, [type, setPageEstimateType]);
+  return null;
 }

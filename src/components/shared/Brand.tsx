@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { CSSProperties } from "react";
 
 /** The 2×2 pixel logo mark. */
@@ -15,9 +16,9 @@ export function BrandMark({ style }: { style?: CSSProperties }) {
 /** Logo mark plus wordmark, linking home. */
 export function Brand({ name, ariaLabel, href }: { name: string; ariaLabel: string; href: string }) {
   return (
-    <a className="brand" href={href} aria-label={ariaLabel}>
+    <Link className="brand" href={href} aria-label={ariaLabel}>
       <BrandMark />
       {name}
-    </a>
+    </Link>
   );
 }

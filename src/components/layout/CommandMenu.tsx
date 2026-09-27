@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState, type KeyboardEvent } from "react";
 import type { Command, CommandMenuContent } from "@/types/content";
 import { Icon } from "@/components/shared/Icon";
@@ -15,6 +16,8 @@ export function CommandMenu({ content }: { content: CommandMenuContent }) {
   const input = useRef<HTMLInputElement>(null);
   const list = useRef<HTMLDivElement>(null);
   const isMac = useIsMac();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
@@ -78,7 +81,9 @@ export function CommandMenu({ content }: { content: CommandMenuContent }) {
     setTimeout(() => {
       switch (a.type) {
         case "preview":
-          site.builder.current?.preview(a.project);
+          // The builder lives on the home page; elsewhere, go there instead.
+          if (site.builder.current) site.builder.current.preview(a.project);
+          else router.push("/");
           break;
         case "estimate":
           site.openEstimate();
@@ -89,9 +94,12 @@ export function CommandMenu({ content }: { content: CommandMenuContent }) {
         case "theme":
           toggleTheme();
           break;
-        case "jump":
-          document.getElementById(a.target)?.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" });
+        case "jump": {
+          const el = document.getElementById(a.target);
+          if (el && pathname === "/") el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" });
+          else router.push(`/#${a.target}`);
           break;
+        }
       }
     }, 60);
   }

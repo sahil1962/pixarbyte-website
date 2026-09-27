@@ -26,12 +26,7 @@ export function LayoutVisual({ labels }: { labels: [string, string] }) {
   }, []);
 
   return (
-    <div
-      className={shuffled ? "svc-vis vis-front shuffle" : "svc-vis vis-front"}
-      id="vis-front"
-      aria-hidden="true"
-      ref={ref}
-    >
+    <div className={shuffled ? "svc-vis vis-front shuffle" : "svc-vis vis-front"} aria-hidden="true" ref={ref}>
       <div className="mini-browser">
         <div className="bar">
           <i />
@@ -45,9 +40,7 @@ export function LayoutVisual({ labels }: { labels: [string, string] }) {
           <i className="blk d" />
         </div>
       </div>
-      <span className="badge bp" id="bp-label">
-        {shuffled ? labels[1] : labels[0]}
-      </span>
+      <span className="badge bp">{shuffled ? labels[1] : labels[0]}</span>
     </div>
   );
 }

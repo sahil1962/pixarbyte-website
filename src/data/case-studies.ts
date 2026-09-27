@@ -34,6 +34,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "foodgo",
     filter: "mobile",
+    services: ["mobile-app-development", "backend-development"],
     client: "FoodGo",
     location: "Southwark, London",
     title: "Ordering and live rider tracking for 14 London restaurants",
@@ -57,6 +58,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "meridian",
     filter: "web",
+    services: ["full-stack-development", "backend-development"],
     client: "Meridian Health",
     location: "Marylebone, London",
     title: "Online booking for a private clinic group",
@@ -79,6 +81,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "northwind",
     filter: "cloud",
+    services: ["cloud-services"],
     client: "Northwind Retail",
     location: "Canary Wharf, London",
     title: "Moving a busy e-commerce platform to AWS London",
@@ -102,6 +105,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "stackly",
     filter: "web",
+    services: ["full-stack-development", "frontend-development"],
     client: "Stackly",
     location: "Shoreditch, London",
     title: "A SaaS MVP from idea to first paying teams",
@@ -124,6 +128,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "qubit",
     filter: "nocode",
+    services: ["no-code-development"],
     client: "Qubit Labs",
     location: "King's Cross, London",
     title: "Automated client onboarding with no-code tools",

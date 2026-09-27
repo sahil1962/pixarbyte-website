@@ -11,6 +11,7 @@
 @import "../styles/hero.css" layer(components);
 @import "../styles/sections.css" layer(components);
 @import "../styles/overlays.css" layer(components);
+@import "../styles/pages.css" layer(components);
 @import "../styles/motion.css" layer(components);
 
 /* These design class names are also Tailwind utilities. Don't generate the utilities, or they

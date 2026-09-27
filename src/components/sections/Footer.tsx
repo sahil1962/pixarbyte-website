@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { FooterContent, FooterLink, SiteConfig } from "@/types/content";
 import { ActionLink } from "@/components/shared/Actions";
 import { Brand } from "@/components/shared/Brand";
@@ -5,6 +6,7 @@ import { NewsletterForm } from "./footer/NewsletterForm";
 
 function FooterAnchor({ link }: { link: FooterLink }) {
   if ("action" in link) return <ActionLink action={link.action}>{link.label}</ActionLink>;
+  if (link.href.startsWith("/")) return <Link href={link.href}>{link.label}</Link>;
   return <a href={link.href}>{link.label}</a>;
 }
 
@@ -26,7 +28,7 @@ export function Footer({ content, site }: { content: FooterContent; site: SiteCo
       <div className="container">
         <div className="foot-grid">
           <div className="foot-brand">
-            <Brand name={site.name} ariaLabel={site.brandAriaLabel} href="#top" />
+            <Brand name={site.name} ariaLabel={site.brandAriaLabel} href="/" />
             <p>{content.blurb}</p>
             <NewsletterForm content={content.newsletter} />
             <div className="socials">
