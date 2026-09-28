@@ -1,0 +1,4 @@
+/** Renders structured data. Only pass objects built in src/lib/schema.ts, never user input. */
+export function JsonLd({ data }: { data: Record<string, unknown> }) {
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
+}
