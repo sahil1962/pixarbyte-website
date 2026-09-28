@@ -1,5 +1,6 @@
 import type { FAQ, SiteConfig } from "@/types/content";
 import type { Service } from "@/types/service";
+import type { TeamMember } from "@/types/about";
 import type { CaseStudyMeta } from "./validation/case-study";
 
 export function organizationSchema(site: SiteConfig) {
@@ -105,5 +106,30 @@ export function creativeWorkSchema(site: SiteConfig, m: CaseStudyMeta) {
     inLanguage: "en-GB",
     url,
     mainEntityOfPage: url,
+  };
+}
+
+export function aboutPageSchema(site: SiteConfig, leaders: TeamMember[], teamSize: number, foundingDate: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    url: `${site.url}/about`,
+    mainEntity: {
+      "@type": "Organization",
+      name: site.name,
+      url: site.url,
+      logo: `${site.url}/icon.svg`,
+      // Left out until the real founding year replaces the placeholder.
+      ...(/^\d{4}$/.test(foundingDate) ? { foundingDate } : {}),
+      founder: leaders.map((l) => ({
+        "@type": "Person",
+        name: l.name,
+        jobTitle: l.role,
+        image: new URL(l.photo, site.url).toString(),
+        sameAs: Object.values(l.socials ?? {}).filter(Boolean),
+      })),
+      numberOfEmployees: { "@type": "QuantitativeValue", value: teamSize },
+      address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" },
+    },
   };
 }

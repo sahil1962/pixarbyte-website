@@ -141,3 +141,10 @@
 #lightbox {
   width: min(1100px, calc(100vw - 32px));
 }
+
+/* Tabs drawn as the segmented control (pricing packages). */
+.seg button[role="tab"][aria-selected="true"] {
+  background: var(--background);
+  color: var(--foreground);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
