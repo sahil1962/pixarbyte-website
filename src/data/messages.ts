@@ -5,7 +5,6 @@ export const messages = {
   darkModeOn: { title: "Dark mode on" },
   lightModeOn: { title: "Light mode on" },
   demoLink: { title: "Demo link", body: "This page isn't part of the hero preview." },
-  booking: { title: "Booking calendar", body: "This would open your Calendly or Cal.com page." },
   flowPassed: { title: "Test run passed", body: "Lead added to Airtable and posted to Slack." },
   outageHandled: { title: "Outage handled automatically", body: "Traffic was rerouted with zero downtime." },
   automationOn: { title: "Automation on" },

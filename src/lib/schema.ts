@@ -133,3 +133,40 @@ export function aboutPageSchema(site: SiteConfig, leaders: TeamMember[], teamSiz
     },
   };
 }
+
+/** The studio as a local business in London, for search and maps. */
+export function localBusinessSchema(site: SiteConfig) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${site.url}/#business`,
+    name: site.name,
+    legalName: site.legalName,
+    description: site.description,
+    url: site.url,
+    email: site.email,
+    telephone: site.phone.display,
+    image: `${site.url}/opengraph-image`,
+    logo: `${site.url}/icon.svg`,
+    priceRange: "££",
+    currenciesAccepted: "GBP",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "London",
+      addressRegion: "Greater London",
+      addressCountry: "GB",
+    },
+    areaServed: [
+      { "@type": "City", name: "London" },
+      { "@type": "Country", name: "United Kingdom" },
+    ],
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "18:00",
+      },
+    ],
+  };
+}

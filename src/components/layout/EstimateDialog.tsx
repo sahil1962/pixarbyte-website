@@ -1,9 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState, useTransition, type FormEvent } from "react";
+import { requestEstimate } from "@/app/contact/actions";
 import type { BuilderProject, EstimateContent, EstimateModel, ProjectSize, ProjectType } from "@/types/content";
 import { Icon } from "@/components/shared/Icon";
 import { Segmented } from "@/components/shared/Segmented";
+import { Turnstile } from "@/components/shared/Turnstile";
 import { useSite } from "@/components/layout/SiteProvider";
 import { pixelBurst } from "@/lib/burst";
 import { estimate as calcEstimate } from "@/lib/estimator";
@@ -31,6 +34,10 @@ export function EstimateDialog({
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [sentText, setSentText] = useState<string | null>(null);
+  const [token, setToken] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [turnstileReset, setTurnstileReset] = useState(0);
+  const [pending, startTransition] = useTransition();
 
   // Each time the dialog opens: fresh type and features, empty email, form view.
   // The size choice is kept between opens, as in the design.
@@ -41,6 +48,7 @@ export function EstimateDialog({
     setEmail("");
     setError("");
     setSentText(null);
+    setHoneypot("");
   }
 
   const rangeRef = useRef<HTMLElement>(null);
@@ -90,8 +98,12 @@ export function EstimateDialog({
   const timeline = fill(content.timeline, { min: weeks[0], max: weeks[1] });
   const label = projects.find((p) => p.key === type)?.label ?? "";
 
+  // "Get an exact quote" carries this estimate to /contact, where it's recalculated.
+  const quoteHref = `/contact?type=${type}&size=${size}&features=${encodeURIComponent(feats.join(","))}&estimate=1`;
+
   function onSubmit(e: FormEvent) {
     e.preventDefault();
+    if (pending) return;
     const v = email.trim();
     if (!EMAIL.test(v)) {
       setError(content.emailError);
@@ -99,10 +111,30 @@ export function EstimateDialog({
       return;
     }
     setError("");
-    setSentText(
-      fill(content.success.text, { type: label.toLowerCase(), range: rangeRef.current?.textContent ?? "", email: v }),
-    );
-    notify("estimateSent");
+    const range = rangeRef.current?.textContent ?? "";
+    startTransition(async () => {
+      let res: Awaited<ReturnType<typeof requestEstimate>>;
+      try {
+        res = await requestEstimate({
+          email: v,
+          type,
+          size,
+          features: feats,
+          turnstileToken: token,
+          website: honeypot,
+        });
+      } catch {
+        res = { ok: false, error: content.sendError };
+      }
+      if (!res.ok) {
+        setError(res.error);
+        setTurnstileReset((n) => n + 1);
+        emailRef.current?.focus();
+        return;
+      }
+      setSentText(fill(content.success.text, { type: label.toLowerCase(), range, email: v }));
+      notify("estimateSent");
+    });
   }
 
   return (
@@ -207,14 +239,33 @@ export function EstimateDialog({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <button className="btn btn-primary" type="submit">
-                {content.submit}
+              <button className="btn btn-primary" type="submit" disabled={pending}>
+                {pending ? content.sending : content.submit}
               </button>
             </div>
             <div className="err-msg" id="email-err">
               {error}
             </div>
+            {/* Honeypot: hidden from people; bots fill it in. */}
+            <div className="sr-only" aria-hidden="true">
+              <label htmlFor="est-website">{content.honeypotLabel}</label>
+              <input
+                id="est-website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
+            </div>
+            {estimate.open && <Turnstile onToken={setToken} resetKey={turnstileReset} />}
           </form>
+          <p className="disclaimer m-0">
+            {`${content.exactQuote.lead} `}
+            <Link className="link-btn p-0 text-xs" href={quoteHref} onClick={closeEstimate}>
+              {content.exactQuote.link}
+            </Link>
+          </p>
         </div>
       </div>
       <div className={sentText ? "success on" : "success"} id="est-success">
@@ -223,9 +274,14 @@ export function EstimateDialog({
         </div>
         <h3>{content.success.title}</h3>
         <p id="success-text">{sentText}</p>
-        <button className="btn btn-outline" type="button" onClick={closeEstimate}>
-          {content.success.done}
-        </button>
+        <div className="flex flex-wrap justify-center gap-2.5">
+          <Link className="btn btn-primary" href={quoteHref} onClick={closeEstimate}>
+            {content.exactQuote.link}
+          </Link>
+          <button className="btn btn-outline" type="button" onClick={closeEstimate}>
+            {content.success.done}
+          </button>
+        </div>
       </div>
       <div ref={burstLayer} />
     </dialog>

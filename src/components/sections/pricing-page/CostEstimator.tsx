@@ -1,11 +1,11 @@
 "use client";
 
 import { sendGAEvent } from "@next/third-parties/google";
+import Link from "next/link";
 import { useState } from "react";
 import type { BuilderProject, EstimateModel, ProjectSize, ProjectType } from "@/types/content";
 import type { PricingPageContent } from "@/types/pricing";
 import { Segmented } from "@/components/shared/Segmented";
-import { useSite } from "@/components/layout/SiteProvider";
 import { estimate } from "@/lib/estimator";
 import { fill, formatEstimate } from "@/lib/format";
 
@@ -22,7 +22,6 @@ export function CostEstimator({
   projects: BuilderProject[];
   copy: PricingPageContent["estimator"];
 }) {
-  const { openEstimate } = useSite();
   const [type, setType] = useState<ProjectType>(projects[0].key);
   const [size, setSize] = useState<ProjectSize>("s");
   const [features, setFeatures] = useState<string[]>([]);
@@ -34,8 +33,9 @@ export function CostEstimator({
   function onCta() {
     if (process.env.NEXT_PUBLIC_GA_ID)
       sendGAEvent("event", "estimator_complete", { type, low: result.low, high: result.high });
-    openEstimate(type);
   }
+  // /contact recalculates the range from these inputs rather than trusting a price in the URL.
+  const quoteHref = `/contact?type=${type}&size=${size}&features=${encodeURIComponent(features.join(","))}&estimate=1`;
 
   return (
     <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
@@ -110,9 +110,9 @@ export function CostEstimator({
           </div>
         </dl>
         <p className="disclaimer mt-5 mb-6">{copy.disclaimer}</p>
-        <button type="button" className="btn btn-primary" onClick={onCta}>
+        <Link className="btn btn-primary" href={quoteHref} onClick={onCta}>
           {copy.cta}
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -37,6 +37,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local lead storage (contact form fallback)
+/.data/
+
+# temporary design copy used for visual comparison
+/public/__design.html
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

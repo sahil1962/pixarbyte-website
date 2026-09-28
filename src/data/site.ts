@@ -48,7 +48,7 @@ export const mobileMenu: MobileMenuContent = {
     { label: "Process", href: "/#process" },
     { label: "Pricing", href: "/pricing" },
     { label: "FAQ", href: "/#faq" },
-    { label: "Contact", href: "/#contact" },
+    { label: "Contact", href: "/contact" },
   ],
   primaryCta: "Get a quick estimate",
   secondaryCta: "Book a 30-minute call",
