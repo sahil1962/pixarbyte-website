@@ -6,6 +6,7 @@ import { aboutContent, certifications } from "@/data/about";
 import { builder } from "@/data/builder";
 import { workSection } from "@/data/case-studies";
 import { commandMenu } from "@/data/commands";
+import { bookingPlaceholder, contactFaqs, contactPage, quoteOptions, thankYouPage } from "@/data/contact";
 import { faqs, faqSection } from "@/data/faqs";
 import { footer } from "@/data/footer";
 import { hero } from "@/data/hero";
@@ -249,4 +250,23 @@ export async function getTeam() {
 
 export async function getCertifications() {
   return certifications;
+}
+
+export async function getContactPage() {
+  return { page: contactPage, options: quoteOptions, faqs: contactFaqs };
+}
+
+/** Package id → readable name, e.g. "websites-business" → "Websites: Business", for quote prefill. */
+export async function getPackageNames() {
+  return Object.fromEntries(
+    packageGroups.flatMap((g) => g.tiers.map((t) => [`${g.id}-${t.id}`, `${g.label}: ${t.name}`] as const)),
+  );
+}
+
+export async function getThankYouPage() {
+  return thankYouPage;
+}
+
+export async function getBookingPlaceholder() {
+  return bookingPlaceholder;
 }

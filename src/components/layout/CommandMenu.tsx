@@ -94,6 +94,9 @@ export function CommandMenu({ content }: { content: CommandMenuContent }) {
         case "theme":
           toggleTheme();
           break;
+        case "go":
+          router.push(a.href);
+          break;
         case "jump": {
           const el = document.getElementById(a.target);
           if (el && pathname === "/") el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" });

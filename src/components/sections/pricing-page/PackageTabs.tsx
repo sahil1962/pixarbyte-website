@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import type { PackageGroup, PricingPageContent } from "@/types/pricing";
-import { EstimateButton } from "@/components/shared/Actions";
 import { Icon } from "@/components/shared/Icon";
 import { fill, formatGBP } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -161,9 +160,13 @@ export function PackageTabs({ groups, copy }: { groups: PackageGroup[]; copy: Co
                     );
                   })}
                 </ul>
-                <EstimateButton className={t.highlighted ? "btn btn-primary" : "btn btn-outline"} type={t.cta.type}>
+                <Link
+                  className={t.highlighted ? "btn btn-primary" : "btn btn-outline"}
+                  href={`/contact?service=${g.service}&package=${g.id}-${t.id}`}
+                  aria-label={`${t.cta.label}: ${g.label} ${t.name}`}
+                >
                   {t.cta.label}
-                </EstimateButton>
+                </Link>
               </article>
             ))}
           </div>

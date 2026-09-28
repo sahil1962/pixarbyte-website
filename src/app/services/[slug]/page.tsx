@@ -17,7 +17,7 @@ import {
 } from "@/components/sections/service-detail/ServiceDetailSections";
 import { ServiceCardView } from "@/components/sections/services/ServiceCardView";
 import { CaseGrid } from "@/components/sections/work/WorkShowcase";
-import { BookCallButton, EstimateButton, PageEstimateType } from "@/components/shared/Actions";
+import { BookCallButton, PageEstimateType } from "@/components/shared/Actions";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { PageHero } from "@/components/shared/PageHero";
 import { PageSection } from "@/components/shared/PageSection";
@@ -222,9 +222,9 @@ export default async function ServicePage({ params }: Props) {
         site={site}
         actions={
           <>
-            <EstimateButton className="btn btn-primary btn-lg" type={service.estimate.type}>
-              {service.estimate.label}
-            </EstimateButton>
+            <Link className="btn btn-primary btn-lg" href={`/contact?service=${service.slug}`}>
+              {copy.heroPrimary}
+            </Link>
             <BookCallButton className="btn btn-outline btn-lg">{copy.heroSecondary}</BookCallButton>
           </>
         }

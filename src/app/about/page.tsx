@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Cta } from "@/components/sections/Cta";
 import {
   CertificationsSection,
@@ -12,7 +13,7 @@ import {
   WhyWorkWithUs,
 } from "@/components/sections/about/AboutSections";
 import { StatGrid } from "@/components/sections/why/StatGrid";
-import { BookCallButton, EstimateButton } from "@/components/shared/Actions";
+import { BookCallButton } from "@/components/shared/Actions";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { PageHero } from "@/components/shared/PageHero";
 import { PageSection } from "@/components/shared/PageSection";
@@ -86,7 +87,9 @@ export default async function AboutPage() {
         site={site}
         actions={
           <>
-            <EstimateButton className="btn btn-primary btn-lg">{about.hero.primary}</EstimateButton>
+            <Link className="btn btn-primary btn-lg" href="/contact">
+              {about.hero.primary}
+            </Link>
             <BookCallButton className="btn btn-outline btn-lg">{about.hero.secondary}</BookCallButton>
           </>
         }

@@ -483,7 +483,13 @@ export interface EstimateContent {
   emailLabel: string;
   emailPlaceholder: string;
   submit: string;
+  sending: string;
   emailError: string;
+  /** Shown when the server couldn't send the estimate. */
+  sendError: string;
+  /** Link to /contact, prefilled with this estimate. */
+  exactQuote: { lead: string; link: string };
+  honeypotLabel: string;
   success: {
     title: string;
     /** `{type}`, `{range}` and `{email}` are filled in. */
@@ -499,7 +505,8 @@ export type CommandAction =
   | { type: "estimate" }
   | { type: "book" }
   | { type: "theme" }
-  | { type: "jump"; target: string };
+  | { type: "jump"; target: string }
+  | { type: "go"; href: string };
 
 export interface Command {
   group: string;

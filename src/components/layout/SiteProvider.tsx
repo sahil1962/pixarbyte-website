@@ -12,6 +12,7 @@ import {
 } from "react";
 import type { Messages } from "@/data/messages";
 import type { Audience, ProjectType } from "@/types/content";
+import { calendlyUrl, openCalendly } from "@/lib/calendly";
 import { toast } from "@/lib/toast";
 
 /** What the hero builder exposes to the rest of the page (command menu, estimate dialog). */
@@ -47,7 +48,10 @@ interface SiteContextValue {
   closeMenu(): void;
 
   toggleTheme(): void;
+  /** "Book a call": Calendly when NEXT_PUBLIC_CALENDLY_URL is set, otherwise a placeholder dialog. */
   book(): void;
+  bookingOpen: boolean;
+  closeBooking(): void;
   demo(): void;
 }
 
@@ -79,6 +83,7 @@ export function SiteProvider({
   const [estimate, setEstimate] = useState<SiteContextValue["estimate"]>({ open: false, type: "website", session: 0 });
   const [commandOpen, setCommandOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
 
   const notify = useCallback((key: keyof Messages) => toast(messages[key]), [messages]);
 
@@ -99,8 +104,11 @@ export function SiteProvider({
 
   const book = useCallback(() => {
     setMenuOpen(false);
-    notify("booking");
-  }, [notify]);
+    setEstimate((e) => ({ ...e, open: false }));
+    const url = calendlyUrl();
+    if (url) void openCalendly(url);
+    else setBookingOpen(true);
+  }, []);
 
   const value = useMemo<SiteContextValue>(
     () => ({
@@ -129,9 +137,11 @@ export function SiteProvider({
       closeMenu: () => setMenuOpen(false),
       toggleTheme,
       book,
+      bookingOpen,
+      closeBooking: () => setBookingOpen(false),
       demo: () => notify("demoLink"),
     }),
-    [messages, notify, audience, estimate, openEstimate, commandOpen, menuOpen, toggleTheme, book],
+    [messages, notify, audience, estimate, openEstimate, commandOpen, menuOpen, toggleTheme, book, bookingOpen],
   );
 
   return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;

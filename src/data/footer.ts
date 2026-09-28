@@ -37,7 +37,7 @@ export const footer: FooterContent = {
       links: [
         { label: siteConfig.email, href: `mailto:${siteConfig.email}` },
         { label: siteConfig.phone.display, href: siteConfig.phone.href },
-        { label: siteConfig.location, href: "/#contact" },
+        { label: siteConfig.location, href: "/contact" },
         { label: "Book a call", action: "book" },
       ],
     },

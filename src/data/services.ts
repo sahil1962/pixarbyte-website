@@ -1117,6 +1117,7 @@ export const serviceDetail = {
   breadcrumbHome: "Home",
   breadcrumbServices: "Services",
   breadcrumbLabel: "Breadcrumb",
+  heroPrimary: "Get a free quote",
   heroSecondary: "Book a 30-minute call",
   fromLabel: "From",
   overviewTitle: "Why it matters.",

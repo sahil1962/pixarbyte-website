@@ -1,5 +1,5 @@
+import NextLink from "next/link";
 import type { HeaderContent, Link, SiteConfig } from "@/types/content";
-import { EstimateButton } from "@/components/shared/Actions";
 import { Brand } from "@/components/shared/Brand";
 import { MenuButton, NavLinks, SearchButton, ThemeButton } from "./header/HeaderControls";
 
@@ -16,7 +16,9 @@ export function Header({ content, site, services }: { content: HeaderContent; si
         <div className="nav-actions">
           <SearchButton search={content.search} />
           <ThemeButton ariaLabel={content.themeAriaLabel} />
-          <EstimateButton className="btn btn-primary">{content.primaryCta}</EstimateButton>
+          <NextLink className="btn btn-primary" href="/contact">
+            {content.primaryCta}
+          </NextLink>
           <MenuButton ariaLabel={content.menuAriaLabel} />
         </div>
       </div>

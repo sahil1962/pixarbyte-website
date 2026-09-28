@@ -29,7 +29,7 @@ export function EstimateButton({
   );
 }
 
-/** "Book a call". The booking page isn't connected yet, so it shows the booking toast. */
+/** "Book a call": opens Calendly (NEXT_PUBLIC_CALENDLY_URL) or the "coming soon" booking dialog. */
 export function BookCallButton({ className, children }: { className?: string; children: ReactNode }) {
   const { book } = useSite();
   return (
@@ -39,7 +39,7 @@ export function BookCallButton({ className, children }: { className?: string; ch
   );
 }
 
-/** A link rendered as `<a href="#">` whose action is a toast (a page that doesn't exist yet, or booking). */
+/** A link rendered as `<a href="#">` whose action is a toast (a page that doesn't exist yet) or booking. */
 export function ActionLink({
   action,
   className,

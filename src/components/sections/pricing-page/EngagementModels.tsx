@@ -1,5 +1,5 @@
 import type { EngagementModel, PricingPageContent } from "@/types/pricing";
-import { EstimateButton } from "@/components/shared/Actions";
+import Link from "next/link";
 import { Icon } from "@/components/shared/Icon";
 import { formatGBP } from "@/lib/format";
 import { ContentIcon } from "@/lib/icons";
@@ -41,9 +41,9 @@ export function EngagementModels({ models, copy }: { models: EngagementModel[]; 
               </li>
             ))}
           </ul>
-          <EstimateButton className={m.highlighted ? "btn btn-primary" : "btn btn-outline"} type={m.cta.type}>
+          <Link className={m.highlighted ? "btn btn-primary" : "btn btn-outline"} href={`/contact?model=${m.id}`}>
             {m.cta.label}
-          </EstimateButton>
+          </Link>
         </article>
       ))}
     </div>

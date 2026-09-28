@@ -17,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     { url: `${url}/pricing`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${url}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${url}/contact`, lastModified: now, changeFrequency: "yearly", priority: 0.7 },
     { url: `${url}/portfolio`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     ...caseStudies.map((c) => ({
       url: `${url}/portfolio/${c.slug}`,

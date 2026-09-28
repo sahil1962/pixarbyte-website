@@ -148,3 +148,23 @@
   color: var(--foreground);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+/* Quote form: textareas, selects and radios use the design's .input and .check. */
+textarea.input {
+  height: auto;
+  min-height: 140px;
+  padding: 10px 12px;
+  line-height: 1.5;
+  resize: vertical;
+}
+.check input[type="radio"] {
+  border-radius: 50%;
+}
+.check input[type="radio"]:checked::after {
+  width: 6px;
+  height: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--primary-foreground);
+  transform: none;
+}

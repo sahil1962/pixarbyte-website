@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { BookingDialog } from "@/components/layout/BookingDialog";
 import { CommandMenu } from "@/components/layout/CommandMenu";
 import { EstimateDialog } from "@/components/layout/EstimateDialog";
 import { GlowTracker } from "@/components/layout/GlowTracker";
@@ -12,6 +13,7 @@ import { Header } from "@/components/sections/Header";
 import { IconSprite } from "@/components/shared/Icon";
 import { JsonLd } from "@/components/shared/JsonLd";
 import {
+  getBookingPlaceholder,
   getCommandMenu,
   getEstimator,
   getFooter,
@@ -52,17 +54,19 @@ export const viewport: Viewport = {
 const themeInit = `(function(){try{var d=document.documentElement;if(!d.dataset.theme)d.dataset.theme=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}catch(e){}})()`;
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [site, header, mobileMenu, footer, hero, estimator, commandMenu, messages, services] = await Promise.all([
-    getSiteConfig(),
-    getHeader(),
-    getMobileMenu(),
-    getFooter(),
-    getHero(),
-    getEstimator(),
-    getCommandMenu(),
-    getMessages(),
-    getServices(),
-  ]);
+  const [site, header, mobileMenu, footer, hero, estimator, commandMenu, messages, services, booking] =
+    await Promise.all([
+      getSiteConfig(),
+      getHeader(),
+      getMobileMenu(),
+      getFooter(),
+      getHero(),
+      getEstimator(),
+      getCommandMenu(),
+      getMessages(),
+      getServices(),
+      getBookingPlaceholder(),
+    ]);
   const serviceLinks = services.map((s) => ({ label: s.navLabel, href: `/services/${s.slug}` }));
 
   return (
@@ -81,6 +85,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Footer content={footer} site={site} />
           <MobileMenu content={mobileMenu} site={site} />
           <EstimateDialog content={estimator.content} model={estimator.model} projects={estimator.projects} />
+          <BookingDialog content={booking} />
           <CommandMenu content={commandMenu} />
           <Toaster />
           <GlowTracker />
