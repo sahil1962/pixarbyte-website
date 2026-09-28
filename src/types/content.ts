@@ -64,6 +64,8 @@ export interface Person {
 export interface Testimonial extends Person {
   quote: string;
   featured?: boolean;
+  /** Services this client used; the first match is quoted on that service's page. */
+  services?: ServiceSlug[];
 }
 
 export interface SectionCopy {
@@ -91,6 +93,8 @@ export interface SiteConfig {
 export interface HeaderContent {
   nav: Link[];
   navLabel: string;
+  /** First entry in the Services menu. */
+  allServicesLabel: string;
   search: { label: string; ariaLabel: string; shortcut: { mac: string; other: string } };
   themeAriaLabel: string;
   primaryCta: string;
@@ -296,6 +300,8 @@ export type WorkFilter = "all" | "web" | "mobile" | "cloud" | "nocode";
 export interface CaseStudy {
   id: string;
   filter: Exclude<WorkFilter, "all">;
+  /** Services involved, used for "Related work" on service pages. */
+  services: ServiceSlug[];
   client: string;
   location: string;
   title: string;
@@ -357,6 +363,8 @@ export interface Comparison {
 /* ---------- Tech ---------- */
 
 export interface Tech {
+  /** Stable id used by services (`techStack`) and case studies. */
+  id: string;
   name: string;
   category: string;
   color: string;

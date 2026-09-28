@@ -32,7 +32,7 @@ export function RequestLogVisual({ requests }: { requests: Request[] }) {
   useEffect(() => () => clearInterval(timer.current), []);
 
   return (
-    <div className="svc-vis vis-back" id="reqlog" aria-hidden="true" ref={ref}>
+    <div className="svc-vis vis-back" aria-hidden="true" ref={ref}>
       {rows.map((r) => (
         <div className="req" key={r.key}>
           <span className={`m ${r.method.toLowerCase()}`}>{r.method}</span>

@@ -12,11 +12,40 @@ import { messages } from "@/data/messages";
 import { audienceSection, finalCta } from "@/data/home";
 import { estimateContent, estimateModel, pricingPlans, pricingSection } from "@/data/pricing";
 import { processSection, processSteps } from "@/data/process";
-import { services, servicesSection } from "@/data/services";
+import {
+  bundles,
+  finderOptions,
+  homeBento,
+  serviceDetail,
+  services as rawServices,
+  servicesPage,
+  servicesSection,
+} from "@/data/services";
 import { header, mobileMenu, notFound, siteConfig } from "@/data/site";
 import { comparison, stats, whySection } from "@/data/stats";
-import { techRows, techSection } from "@/data/tech";
+import { techCatalog, techRowIds, techSection } from "@/data/tech";
 import { reviewsSection, testimonials } from "@/data/testimonials";
+import type { ServiceCard, ServiceSlug, Tech } from "@/types/content";
+import type { Service } from "@/types/service";
+import { icons } from "@/lib/icons";
+import { servicesSchema } from "@/lib/validation/service";
+
+/* Validate content once at module load, so bad data fails `next build` instead of a page. */
+const services: Service[] = servicesSchema.parse(rawServices);
+const techById = new Map(techCatalog.map((t) => [t.id, t]));
+for (const s of services) {
+  for (const id of s.techStack) if (!techById.has(id)) throw new Error(`Unknown tech id "${id}" in service ${s.slug}`);
+  for (const name of [s.icon, ...s.offerings.map((o) => o.icon), ...s.benefits.map((b) => b.icon)])
+    if (!icons[name]) throw new Error(`Unknown icon "${name}" in service ${s.slug}; add it to src/lib/icons.tsx`);
+}
+
+function techByIds(ids: string[]): Tech[] {
+  return ids.map((id) => {
+    const t = techById.get(id);
+    if (!t) throw new Error(`Unknown tech id "${id}"`);
+    return t;
+  });
+}
 
 export async function getSiteConfig() {
   return siteConfig;
@@ -42,12 +71,78 @@ export async function getBuilder() {
   return builder;
 }
 
+/** All services, in display order. */
 export async function getServices() {
-  return { section: servicesSection, services };
+  return [...services].sort((a, b) => a.order - b.order);
 }
 
 export async function getServiceBySlug(slug: string) {
   return services.find((s) => s.slug === slug) ?? null;
+}
+
+export async function getServicesBySlugs(slugs: ServiceSlug[]) {
+  return slugs.map((slug) => services.find((s) => s.slug === slug)).filter((s): s is Service => !!s);
+}
+
+/** Card view of a service, as shown on the home bento and in related-service grids. */
+function toCard(s: Service, layout: ServiceCard["layout"] = { span: 2 }): ServiceCard {
+  return {
+    slug: s.slug,
+    title: s.navLabel,
+    shortDescription: s.shortDescription,
+    fromPrice: s.pricingHint.from,
+    estimate: s.estimate,
+    layout,
+    visual: s.visual,
+  };
+}
+
+export async function getServiceCards(slugs?: ServiceSlug[]) {
+  const list = slugs ? await getServicesBySlugs(slugs) : await getServices();
+  return list.map((s) => toCard(s));
+}
+
+/** The home page "Everything you need to ship" bento. */
+export async function getHomeServices() {
+  const cards = homeBento.map((b) => {
+    const s = services.find((x) => x.slug === b.slug);
+    if (!s) throw new Error(`Home bento references unknown service ${b.slug}`);
+    return toCard(s, { span: b.span, tall: b.tall });
+  });
+  return { section: servicesSection, services: cards };
+}
+
+export async function getServicesPage() {
+  return servicesPage;
+}
+
+export async function getServiceDetailCopy() {
+  return serviceDetail;
+}
+
+export async function getServiceFinder() {
+  return finderOptions;
+}
+
+/** Bundles, each priced from the sum of its services' starting prices. */
+export async function getBundles() {
+  return bundles.map((b) => ({
+    ...b,
+    price: b.services.reduce((sum, slug) => sum + (services.find((s) => s.slug === slug)?.pricingHint.from ?? 0), 0),
+    serviceNames: b.services.map((slug) => services.find((s) => s.slug === slug)?.navLabel ?? slug),
+  }));
+}
+
+export async function getTechByIds(ids: string[]) {
+  return techByIds(ids);
+}
+
+export async function getCaseStudiesByService(slug: ServiceSlug, limit = 3) {
+  return caseStudies.filter((c) => c.services.includes(slug)).slice(0, limit);
+}
+
+export async function getTestimonialForService(slug: ServiceSlug) {
+  return testimonials.find((t) => t.services?.includes(slug)) ?? null;
 }
 
 export async function getAudiences() {
@@ -67,7 +162,7 @@ export async function getWhyUs() {
 }
 
 export async function getTechStack() {
-  return { section: techSection, rows: techRows };
+  return { section: techSection, rows: [techByIds(techRowIds[0]), techByIds(techRowIds[1])] as [Tech[], Tech[]] };
 }
 
 export async function getTestimonials() {

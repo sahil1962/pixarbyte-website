@@ -36,7 +36,6 @@ export function SwipeVisual({ ariaLabel, hint, cards }: Props) {
   return (
     <div
       className="svc-vis vis-mob"
-      id="swipe"
       role="button"
       tabIndex={0}
       aria-label={ariaLabel}

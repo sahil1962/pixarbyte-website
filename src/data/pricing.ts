@@ -1,4 +1,20 @@
-import type { EstimateContent, EstimateModel, PricingPlan, PricingSectionContent } from "@/types/content";
+import type { EstimateContent, EstimateModel, PricingPlan, PricingSectionContent, ServiceSlug } from "@/types/content";
+
+/**
+ * Starting price for each service, in GBP excluding VAT. This is the one place these
+ * numbers live: the home bento, the pricing plans and the service pages all read them.
+ */
+export const servicePrices: Record<ServiceSlug, number> = {
+  "frontend-development": 3500,
+  "backend-development": 6000,
+  "full-stack-development": 15000,
+  "no-code-development": 2500,
+  "mobile-app-development": 18000,
+  "cloud-services": 4000,
+};
+
+/** Monthly price of a dedicated developer (the Partner plan). */
+export const partnerMonthlyPrice = 5500;
 
 export const pricingSection: PricingSectionContent = {
   title: "Clear prices, agreed before we start.",
@@ -11,7 +27,7 @@ export const pricingSection: PricingSectionContent = {
 export const pricingPlans: PricingPlan[] = [
   {
     name: "Launch",
-    price: 3500,
+    price: servicePrices["frontend-development"],
     description: "Marketing sites, landing pages and no-code builds.",
     features: [
       "Custom design, no templates",
@@ -23,7 +39,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Build",
-    price: 15000,
+    price: servicePrices["full-stack-development"],
     description: "Web apps, SaaS products and mobile apps.",
     features: [
       "Product design and prototyping",
@@ -37,7 +53,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Partner",
-    price: 5500,
+    price: partnerMonthlyPrice,
     unit: "/ month",
     description: "A dedicated developer or team on a rolling monthly plan.",
     features: [

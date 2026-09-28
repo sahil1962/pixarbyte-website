@@ -14,20 +14,20 @@ export const footer: FooterContent = {
     {
       title: "Services",
       links: [
-        { label: "Web development", href: "#services" },
-        { label: "Mobile apps", href: "#services" },
-        { label: "Full-stack", href: "#services" },
-        { label: "No-code", href: "#services" },
-        { label: "Cloud and DevOps", href: "#services" },
+        { label: "Web development", href: "/services/frontend-development" },
+        { label: "Mobile apps", href: "/services/mobile-app-development" },
+        { label: "Full-stack", href: "/services/full-stack-development" },
+        { label: "No-code", href: "/services/no-code-development" },
+        { label: "Cloud and DevOps", href: "/services/cloud-services" },
       ],
     },
     {
       title: "Company",
       links: [
-        { label: "Work", href: "#work" },
-        { label: "Process", href: "#process" },
-        { label: "Pricing", href: "#pricing" },
-        { label: "FAQ", href: "#faq" },
+        { label: "Work", href: "/#work" },
+        { label: "Process", href: "/#process" },
+        { label: "Pricing", href: "/#pricing" },
+        { label: "FAQ", href: "/#faq" },
         { label: "Careers", action: "demo" },
       ],
     },
@@ -36,7 +36,7 @@ export const footer: FooterContent = {
       links: [
         { label: siteConfig.email, href: `mailto:${siteConfig.email}` },
         { label: siteConfig.phone.display, href: siteConfig.phone.href },
-        { label: siteConfig.location, href: "#contact" },
+        { label: siteConfig.location, href: "/#contact" },
         { label: "Book a call", action: "book" },
       ],
     },

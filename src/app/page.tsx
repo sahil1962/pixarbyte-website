@@ -20,7 +20,7 @@ import {
   getHero,
   getPricing,
   getProcess,
-  getServices,
+  getHomeServices,
   getSiteConfig,
   getTechStack,
   getTestimonials,
@@ -32,7 +32,7 @@ import { websiteSchema } from "@/lib/schema";
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSiteConfig();
   return {
-    ...buildMetadata({ title: site.title, description: site.description, path: "/" }),
+    ...buildMetadata({ title: site.title, description: site.description, path: "/", site }),
     title: { absolute: site.title },
   };
 }
@@ -43,7 +43,7 @@ export default async function HomePage() {
       getSiteConfig(),
       getHero(),
       getBuilder(),
-      getServices(),
+      getHomeServices(),
       getAudiences(),
       getCaseStudies(),
       getProcess(),

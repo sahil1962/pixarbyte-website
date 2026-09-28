@@ -4,9 +4,19 @@ import { SectionHead } from "@/components/shared/SectionHead";
 import { FaqItem } from "./faq/FaqItem";
 
 /** "Questions, answered": sticky intro and contact card beside the question list. */
-export function Faq({ section, faqs, site }: { section: FaqSectionContent; faqs: FAQ[]; site: SiteConfig }) {
+export function Faq({
+  section,
+  faqs,
+  site,
+  tint = true,
+}: {
+  section: FaqSectionContent;
+  faqs: FAQ[];
+  site: SiteConfig;
+  tint?: boolean;
+}) {
   return (
-    <section className="section tint" id="faq" aria-labelledby="faq-title">
+    <section className={tint ? "section tint" : "section"} id="faq" aria-labelledby="faq-title">
       <div className="container faq-grid">
         <div className="faq-side">
           <SectionHead id="faq-title" title={section.title} intro={section.intro} />

@@ -16,24 +16,28 @@ export const testimonials: Testimonial[] = [
     name: "James Porter",
     role: "CTO, Northwind Retail",
     color: "#f97316",
+    services: ["cloud-services"],
   },
   {
     quote: "Every decision was explained in plain English. As a non-technical founder, that mattered most.",
     name: "Sara Malik",
     role: "Founder, Stackly",
     color: "#8b5cf6",
+    services: ["full-stack-development"],
   },
   {
     quote: "They rebuilt our ordering in twelve weeks and it simply works.",
     name: "Ali Raza",
     role: "Founder, FoodGo",
     color: "#0ea5e9",
+    services: ["mobile-app-development"],
   },
   {
     quote: "Deadlines met, weekly demos and zero surprises on the invoice.",
     name: "Hina Khan",
     role: "Operations Lead, Meridian Health",
     color: "#10b981",
+    services: ["backend-development"],
   },
   {
     quote:
@@ -41,6 +45,7 @@ export const testimonials: Testimonial[] = [
     name: "Tom Whitaker",
     role: "Director, Halden & Co",
     color: "#64748b",
+    services: ["frontend-development"],
   },
   {
     quote:
@@ -48,6 +53,7 @@ export const testimonials: Testimonial[] = [
     name: "Priya Shah",
     role: "COO, Qubit Labs",
     color: "#e11d48",
+    services: ["no-code-development"],
   },
   {
     quote: "Felt like an extension of our own team. They joined our stand-ups and just got on with it.",

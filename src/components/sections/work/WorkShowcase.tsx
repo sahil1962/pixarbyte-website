@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, type RefObject } from "react";
 import type { CaseStudy, WorkFilter, WorkSectionContent } from "@/types/content";
 import { Icon } from "@/components/shared/Icon";
 import { Segmented } from "@/components/shared/Segmented";
@@ -12,15 +12,27 @@ import { CaseVisual } from "./CaseMock";
 const DECO_ON = [0, 1, 2, 6, 8, 12, 13, 14];
 const DECO_COUNT = 18;
 
-/** Filterable case study grid, the call-to-action card and the case study dialog. */
-export function WorkShowcase({ section, caseStudies }: { section: WorkSectionContent; caseStudies: CaseStudy[] }) {
+/**
+ * Case study cards, the "Your project could be next" card and the case study dialog.
+ * Used by the home Work section (with a filter) and by "Related work" on service pages.
+ */
+export function CaseGrid({
+  section,
+  caseStudies,
+  filter = "all",
+  run = 0,
+  gridRef,
+}: {
+  section: WorkSectionContent;
+  caseStudies: CaseStudy[];
+  filter?: WorkFilter;
+  run?: number;
+  gridRef?: RefObject<HTMLDivElement | null>;
+}) {
   const { openEstimate } = useSite();
-  const [filter, setFilter] = useState<WorkFilter>("all");
-  const [run, setRun] = useState(0);
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [shownIdx, setShownIdx] = useState(0);
   const dialog = useModalDialog(openIdx !== null);
-  const grid = useRef<HTMLDivElement>(null);
 
   const ctaCard = useRef<HTMLDivElement>(null);
   const [lit, setLit] = useState<number[]>([]);
@@ -28,12 +40,6 @@ export function WorkShowcase({ section, caseStudies }: { section: WorkSectionCon
     if (!visible || prefersReducedMotion()) return;
     DECO_ON.forEach((i) => setTimeout(() => setLit((cur) => (cur.includes(i) ? cur : [...cur, i])), i * 40));
   });
-
-  function applyFilter(f: WorkFilter) {
-    setFilter(f);
-    setRun((r) => r + 1);
-    grid.current?.scrollTo?.({ left: 0, behavior: "smooth" });
-  }
 
   function openCase(i: number) {
     setShownIdx(i);
@@ -44,21 +50,7 @@ export function WorkShowcase({ section, caseStudies }: { section: WorkSectionCon
 
   return (
     <>
-      <div className="sec-head row">
-        <div>
-          <h2 id="work-title">{section.title}</h2>
-          <p>{section.intro}</p>
-        </div>
-        <Segmented
-          id="work-filter"
-          ariaLabel={section.filterLabel}
-          options={section.filters.map((f) => ({ value: f.id, label: f.label }))}
-          value={filter}
-          onChange={applyFilter}
-        />
-      </div>
-
-      <div className="work-grid" id="work-grid" ref={grid}>
+      <div className="work-grid" id="work-grid" ref={gridRef}>
         {caseStudies.map((c, i) => {
           const show = filter === "all" || c.filter === filter;
           // A new key restarts the entrance animation for every card a filter shows.
@@ -181,6 +173,38 @@ export function WorkShowcase({ section, caseStudies }: { section: WorkSectionCon
           </div>
         </div>
       </dialog>
+    </>
+  );
+}
+
+/** Home "Recent work": filter pills above the case study grid. */
+export function WorkShowcase({ section, caseStudies }: { section: WorkSectionContent; caseStudies: CaseStudy[] }) {
+  const [filter, setFilter] = useState<WorkFilter>("all");
+  const [run, setRun] = useState(0);
+  const grid = useRef<HTMLDivElement>(null);
+
+  function applyFilter(f: WorkFilter) {
+    setFilter(f);
+    setRun((r) => r + 1);
+    grid.current?.scrollTo?.({ left: 0, behavior: "smooth" });
+  }
+
+  return (
+    <>
+      <div className="sec-head row">
+        <div>
+          <h2 id="work-title">{section.title}</h2>
+          <p>{section.intro}</p>
+        </div>
+        <Segmented
+          id="work-filter"
+          ariaLabel={section.filterLabel}
+          options={section.filters.map((f) => ({ value: f.id, label: f.label }))}
+          value={filter}
+          onChange={applyFilter}
+        />
+      </div>
+      <CaseGrid section={section} caseStudies={caseStudies} filter={filter} run={run} gridRef={grid} />
     </>
   );
 }
