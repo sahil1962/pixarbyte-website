@@ -56,3 +56,88 @@
   pointer-events: none;
   visibility: hidden;
 }
+
+/* Case study cards that link to a page: focus shows on the whole card. */
+.case-card:has(.card-link:focus-visible) {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.case-card .card-link:focus-visible {
+  outline: none;
+}
+
+/* Portfolio and related-project grids stack on phones instead of scrolling sideways. */
+@media (max-width: 640px) {
+  .work-grid.project-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+  .project-grid .case {
+    flex: none;
+  }
+}
+
+/* Before/after slider: the range input sits over the images; the handle follows it. */
+.ba {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  touch-action: pan-y;
+}
+.ba-after {
+  position: absolute;
+  inset: 0;
+}
+.ba-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--background);
+  box-shadow: 0 0 0 1px var(--border);
+  pointer-events: none;
+}
+.ba-knob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.35);
+}
+.ba input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+.ba:has(input:focus-visible) .ba-knob {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.ba-tag {
+  position: absolute;
+  top: 12px;
+  pointer-events: none;
+}
+
+/* Gallery lightbox */
+#lightbox {
+  width: min(1100px, calc(100vw - 32px));
+}

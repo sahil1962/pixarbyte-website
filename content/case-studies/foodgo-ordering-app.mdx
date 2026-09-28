@@ -1,0 +1,95 @@
+---
+title: "Ordering and live rider tracking for 14 London restaurants"
+slug: "foodgo-ordering-app"
+client: "FoodGo"
+confidential: false
+summary: "A branded ordering app with live rider tracking that took 14 South London restaurants off commission-heavy delivery apps."
+date: "2026-03-15"
+featured: true
+order: 1
+services: ["mobile-app-development", "backend-development"]
+industry: "Restaurants and food"
+duration: "12 weeks"
+teamSize: 4
+platforms: ["iOS", "Android", "Web admin"]
+tech: ["flutter", "nodejs", "postgresql", "stripe", "aws", "firebase"]
+cover: "/images/projects/foodgo-ordering-app/cover.svg"
+thumbnail: "/images/projects/foodgo-ordering-app/thumb.svg"
+liveUrl: ""
+appStoreUrl: ""
+playStoreUrl: ""
+results:
+  - { value: "+65%", label: "online orders" }
+  - { value: "4.8★", label: "App Store rating" }
+  - { value: "12 wks", label: "to launch" }
+gallery:
+  - {
+      src: "/images/projects/foodgo-ordering-app/menu.svg",
+      alt: "Restaurant menu screen in the FoodGo app",
+      device: "mobile",
+    }
+  - {
+      src: "/images/projects/foodgo-ordering-app/tracking.svg",
+      alt: "Live rider tracking screen with a map and arrival time",
+      device: "mobile",
+    }
+  - {
+      src: "/images/projects/foodgo-ordering-app/kitchen.svg",
+      alt: "Kitchen dashboard listing incoming orders by status",
+      device: "desktop",
+    }
+beforeAfter:
+  before: "/images/projects/foodgo-ordering-app/before.svg"
+  after: "/images/projects/foodgo-ordering-app/after.svg"
+  beforeAlt: "The old ordering page: a phone number and a PDF menu"
+  afterAlt: "The new FoodGo app home screen with dishes and a basket"
+testimonial:
+  quote: "They rebuilt our ordering in twelve weeks and it simply works. Customers noticed the difference in the first week."
+  name: "Ali Raza"
+  role: "Founder"
+category: "mobile"
+location: "Southwark, London"
+tags: ["Mobile app", "Backend"]
+colors: { primary: "#1d4ed8", secondary: "#60a5fa" }
+mock: "phone"
+challenge: "Orders came in by phone and three different delivery apps, each taking up to 30% commission and none sharing customer data."
+solution: "A branded iOS and Android app with live rider tracking, a kitchen dashboard and Stripe payments, backed by a Node.js API on AWS London."
+---
+
+## The client
+
+FoodGo runs delivery for 14 independent restaurants across Southwark, Bermondsey and Peckham. Most are family businesses with loyal local customers, and until last year almost all of their delivery orders came through the big marketplace apps.
+
+## The challenge
+
+Orders arrived by phone and through three different delivery apps. Each app took up to 30% commission, kept the customer details to itself and printed tickets in its own format, so kitchens juggled three tablets on a Friday night. Customers had no idea where their food was, and the phone rang constantly with "where's my order?" calls.
+
+FoodGo wanted its own app, under its own brand, that customers would actually prefer to use.
+
+## What we built
+
+<FeatureHighlight
+  title="Live rider tracking"
+  image="/images/projects/foodgo-ordering-app/tracking.svg"
+  alt="Live rider tracking screen with a map and arrival time"
+>
+  Customers follow their rider on a live map, with an arrival time that updates as the rider moves. Riders share their
+  position from a lightweight rider mode in the same app, so there was no extra hardware to buy.
+</FeatureHighlight>
+
+- One iOS and Android app built in Flutter, with menus, favourites, saved addresses and reorder in two taps.
+- Stripe payments with Apple Pay and Google Pay, and refunds the restaurant can issue itself.
+- A kitchen dashboard that shows every order in one queue, whichever restaurant it's for, with ticket printing.
+- Push notifications at each stage, from "accepted" to "at your door".
+
+## Technology choices
+
+We chose Flutter so one small team could ship both apps at once without the quality gap you often get between iOS and Android. The Node.js API runs on AWS in London, with PostgreSQL for orders and Firebase for push notifications. Rider positions stream over WebSockets and are only kept for the length of a delivery.
+
+<Callout>
+  Customer data now belongs to FoodGo, not a marketplace. That alone paid for the project within the first six months.
+</Callout>
+
+## The results
+
+Within three months, online orders were up 65% and phone orders had almost disappeared. The app holds a 4.8★ rating on the App Store, and "where's my order?" calls dropped from dozens a night to a handful a week.

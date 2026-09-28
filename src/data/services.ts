@@ -1133,6 +1133,7 @@ export const serviceDetail = {
   processIntro: "Five steps, a fixed price and a demo every week.",
   projectsTitle: "Related work.",
   projectsIntro: "Recent {name} projects for London businesses.",
+  projectsAll: "View all projects",
   pricingSectionTitle: "Projects and pricing.",
   pricingSectionIntro: "What clients most often build with us, and where prices start.",
   useCasesTitle: "Typical projects",

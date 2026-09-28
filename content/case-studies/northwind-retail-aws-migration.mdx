@@ -1,0 +1,81 @@
+---
+title: "Moving a busy e-commerce platform to AWS London"
+slug: "northwind-retail-aws-migration"
+client: "Northwind Retail"
+confidential: false
+summary: "Containerising an online shop and moving it to AWS London with auto-scaling, one-click deploys and zero downtime on migration day."
+date: "2025-11-04"
+featured: true
+order: 3
+services: ["cloud-services"]
+industry: "Retail and e-commerce"
+duration: "8 weeks"
+teamSize: 2
+platforms: ["AWS", "CI/CD"]
+tech: ["aws", "docker", "terraform", "github-actions", "postgresql", "redis"]
+cover: "/images/projects/northwind-retail-aws-migration/cover.svg"
+thumbnail: "/images/projects/northwind-retail-aws-migration/thumb.svg"
+liveUrl: ""
+results:
+  - { value: "−40%", label: "hosting costs" }
+  - { value: "99.99%", label: "uptime since" }
+  - { value: "0 min", label: "downtime to migrate" }
+gallery:
+  - {
+      src: "/images/projects/northwind-retail-aws-migration/pipeline.svg",
+      alt: "Deployment pipeline with build, test and release stages all passing",
+      device: "desktop",
+    }
+  - {
+      src: "/images/projects/northwind-retail-aws-migration/monitoring.svg",
+      alt: "Monitoring dashboard with traffic, response times and error rate",
+      device: "desktop",
+    }
+testimonial:
+  quote: "Our cloud bill dropped by almost half and the site got faster at the same time."
+  name: "James Porter"
+  role: "CTO"
+category: "cloud"
+location: "Canary Wharf, London"
+tags: ["Cloud", "DevOps"]
+colors: { primary: "#18181b", secondary: "#6366f1" }
+mock: "term"
+challenge: "An ageing dedicated server couldn't cope with sale-day traffic, and every deploy meant an evening of downtime."
+solution: "Containerised the platform, moved it to AWS eu-west-2 with auto-scaling, and set up one-click deploys with automatic rollbacks."
+---
+
+## The client
+
+Northwind Retail sells homeware online to customers across the UK, with a small in-house development team based in Canary Wharf. Around a third of its yearly revenue comes from four big sale weekends.
+
+## The challenge
+
+The shop ran on a single dedicated server that was sized for an ordinary Tuesday. On sale days it slowed to a crawl, and twice it fell over completely. Deploys were manual and took the site offline for an evening, so the team shipped less often than it wanted to. The hosting contract was also expensive for what it provided.
+
+## What we built
+
+<FeatureHighlight
+  title="Deploys without the evening off"
+  image="/images/projects/northwind-retail-aws-migration/pipeline.svg"
+  alt="Deployment pipeline with build, test and release stages all passing"
+>
+  Every merge now builds, tests and releases automatically. New versions go live behind a health check, and if anything
+  fails the previous version is back in place within a minute.
+</FeatureHighlight>
+
+- The platform packaged in Docker containers, running on AWS eu-west-2 with auto-scaling for sale days.
+- All infrastructure written in Terraform, so every environment is reviewed and repeatable.
+- Managed PostgreSQL with point-in-time backups, and Redis for sessions and caching.
+- Dashboards and alerts for traffic, response times and errors, sent to the team's Slack.
+
+## Technology choices
+
+We picked AWS in London to keep customer data in the UK and latency low. Containers meant the existing application moved with very few code changes. GitHub Actions runs the pipeline the team already knew, and Terraform means nothing is set up by hand.
+
+<Callout>
+  The final switch-over happened on a Tuesday morning with the shop open. Customers didn't notice a thing.
+</Callout>
+
+## The results
+
+Hosting costs fell by 40%, the site has held 99.99% uptime since the move, and the migration itself took zero minutes of downtime. The team now deploys several times a day instead of once a fortnight.

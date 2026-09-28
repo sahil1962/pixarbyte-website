@@ -1,0 +1,80 @@
+---
+title: "A SaaS MVP from idea to first paying teams"
+slug: "stackly-saas-mvp"
+client: "Stackly"
+confidential: false
+summary: "Designing and building a multi-tenant SaaS product in nine weeks, in time for an investor demo and its first paying teams."
+date: "2025-09-12"
+featured: true
+order: 4
+services: ["full-stack-development", "frontend-development"]
+industry: "Software and SaaS"
+duration: "9 weeks"
+teamSize: 3
+platforms: ["Web app", "Admin dashboard"]
+tech: ["nextjs", "react", "typescript", "tailwind", "postgresql", "stripe", "vercel"]
+cover: "/images/projects/stackly-saas-mvp/cover.svg"
+thumbnail: "/images/projects/stackly-saas-mvp/thumb.svg"
+liveUrl: ""
+results:
+  - { value: "9 wks", label: "to launch" }
+  - { value: "120", label: "paying teams by month 3" }
+  - { value: "£0", label: "rework after launch" }
+gallery:
+  - {
+      src: "/images/projects/stackly-saas-mvp/dashboard.svg",
+      alt: "Stackly team dashboard with projects and recent activity",
+      device: "desktop",
+    }
+  - {
+      src: "/images/projects/stackly-saas-mvp/billing.svg",
+      alt: "Billing page with plan choice and Stripe checkout",
+      device: "desktop",
+    }
+  - { src: "/images/projects/stackly-saas-mvp/mobile.svg", alt: "Stackly dashboard on a phone", device: "mobile" }
+testimonial:
+  quote: "Every decision was explained in plain English. As a non-technical founder, that mattered most."
+  name: "Sara Malik"
+  role: "Founder"
+category: "web"
+location: "Shoreditch, London"
+tags: ["Full-stack", "Product design"]
+colors: { primary: "#7c3aed", secondary: "#f0abfc" }
+mock: "browser"
+challenge: "A first-time founder with a clear idea, a fixed budget and an investor demo in ten weeks."
+solution: "Designed and built a multi-tenant web app with Stripe subscriptions, team invites and an admin dashboard in Next.js and PostgreSQL."
+---
+
+## The client
+
+Stackly helps small agencies keep track of client assets: logins, licences, domains and renewals. Its founder, Sara, had run an agency herself and knew the problem well, but had never built software.
+
+## The challenge
+
+Sara had a clear idea, a fixed budget and an investor demo booked in ten weeks. She needed a real product that teams could sign up to and pay for, not a clickable prototype, and she needed to understand every trade-off along the way.
+
+## What we built
+
+<FeatureHighlight
+  title="Built for teams from day one"
+  image="/images/projects/stackly-saas-mvp/dashboard.svg"
+  alt="Stackly team dashboard with projects and recent activity"
+>
+  Every account is a team, with invites, roles and a shared dashboard. Data is separated per team at the database level,
+  so growth to hundreds of customers needed no rework.
+</FeatureHighlight>
+
+- A one-week design sprint that cut the feature list to what the demo and first customers actually needed.
+- Sign-up, team invites and roles, with magic-link login.
+- Stripe subscriptions with a free trial, upgrades and invoices handled automatically.
+- An admin dashboard for Sara to see sign-ups, usage and revenue at a glance.
+
+## Technology choices
+
+Next.js, TypeScript and PostgreSQL gave us one codebase for the product and the marketing site, hosted on Vercel with previews for every change. We wrote a short decision log in plain English, so Sara could explain every choice to investors.
+
+<Callout>The demo ran on the live product, not slides. Stackly closed its pre-seed round a month later.</Callout>
+
+## The results
+
+Stackly launched in nine weeks and had 120 paying teams by month three. Because the foundations were right, there was no rework after launch; every sprint since has gone on new features.

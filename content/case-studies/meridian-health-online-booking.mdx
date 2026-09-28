@@ -1,0 +1,92 @@
+---
+title: "Online booking for a private clinic group"
+slug: "meridian-health-online-booking"
+client: "Meridian Health"
+confidential: false
+summary: "A patient booking portal with SMS reminders and deposits that cut missed appointments by 30% across a Marylebone clinic group."
+date: "2026-01-20"
+featured: true
+order: 2
+services: ["full-stack-development", "backend-development"]
+industry: "Healthcare"
+duration: "10 weeks"
+teamSize: 3
+platforms: ["Web", "Staff dashboard"]
+tech: ["nextjs", "typescript", "nodejs", "postgresql", "stripe", "aws"]
+cover: "/images/projects/meridian-health-online-booking/cover.svg"
+thumbnail: "/images/projects/meridian-health-online-booking/thumb.svg"
+liveUrl: ""
+results:
+  - { value: "−30%", label: "missed appointments" }
+  - { value: "2,000+", label: "bookings a week" }
+  - { value: "1.2s", label: "page load" }
+gallery:
+  - {
+      src: "/images/projects/meridian-health-online-booking/booking.svg",
+      alt: "Choosing a clinician and time slot in the booking portal",
+      device: "desktop",
+    }
+  - {
+      src: "/images/projects/meridian-health-online-booking/calendar.svg",
+      alt: "Staff calendar showing the day's appointments by room",
+      device: "desktop",
+    }
+  - {
+      src: "/images/projects/meridian-health-online-booking/reminder.svg",
+      alt: "SMS reminder with links to confirm or reschedule",
+      device: "mobile",
+    }
+beforeAfter:
+  before: "/images/projects/meridian-health-online-booking/before.svg"
+  after: "/images/projects/meridian-health-online-booking/after.svg"
+  beforeAlt: "The old website: opening hours and a phone number to call"
+  afterAlt: "The new booking portal showing available times this week"
+testimonial:
+  quote: "Deadlines met, weekly demos and zero surprises on the invoice. Our front desk finally has time for patients."
+  name: "Hina Khan"
+  role: "Operations Lead"
+category: "web"
+location: "Marylebone, London"
+tags: ["Web app", "Integrations"]
+colors: { primary: "#047857", secondary: "#34d399" }
+mock: "browser"
+challenge: "Patients could only book by phone during opening hours, and one in five appointments was missed."
+solution: "A patient booking portal connected to their practice system, with SMS reminders, deposits and a staff calendar view."
+---
+
+## The client
+
+Meridian Health is a group of three private clinics in Marylebone offering GP, physiotherapy and dermatology appointments. Its patients are busy professionals who expect to book the way they book everything else: online, at any hour.
+
+## The challenge
+
+Every appointment was booked by phone during opening hours. The front desk spent most of the day on the phone, patients gave up when lines were busy, and one in five appointments was missed with no notice. The clinics' practice management system held the diaries, but it had no patient-facing booking of its own.
+
+## What we built
+
+<FeatureHighlight
+  title="Booking that respects the diary"
+  image="/images/projects/meridian-health-online-booking/booking.svg"
+  alt="Choosing a clinician and time slot in the booking portal"
+>
+  Patients choose a service, a clinician and a time from live availability. Every booking is written straight into the
+  practice system, so the diary staff already use stays the single source of truth.
+</FeatureHighlight>
+
+- A fast, accessible booking portal that works on any phone, with no app to install.
+- SMS reminders 48 and 2 hours before each appointment, with one-tap confirm or reschedule.
+- Card deposits through Stripe for longer appointments, refunded automatically on time.
+- A staff calendar view across all three clinics, filtered by room and clinician.
+
+## Technology choices
+
+The portal is built with Next.js and TypeScript for quick pages and good search visibility. A Node.js integration layer talks to the practice system's API, queues writes when it is slow and retries safely, so a patient never sees a double booking. Everything runs on AWS in London, and patient data never leaves the UK.
+
+<Callout>
+  We ran the old phone process alongside the portal for two weeks and moved clinics over one at a time, so no patient
+  was ever turned away.
+</Callout>
+
+## The results
+
+Missed appointments fell by 30% in the first quarter, and the portal now takes more than 2,000 bookings a week. Pages load in 1.2 seconds on a mobile connection, and the front desk spends its time with patients rather than on the phone.

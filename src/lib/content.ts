@@ -3,11 +3,12 @@
  * so moving to a CMS later means changing this file and nothing else.
  */
 import { builder } from "@/data/builder";
-import { caseStudies, workSection } from "@/data/case-studies";
+import { workSection } from "@/data/case-studies";
 import { commandMenu } from "@/data/commands";
 import { faqs, faqSection } from "@/data/faqs";
 import { footer } from "@/data/footer";
 import { hero } from "@/data/hero";
+import { caseStudyPage, portfolioPage } from "@/data/portfolio";
 import { messages } from "@/data/messages";
 import { audienceSection, finalCta } from "@/data/home";
 import { estimateContent, estimateModel, pricingPlans, pricingSection } from "@/data/pricing";
@@ -27,7 +28,9 @@ import { techCatalog, techRowIds, techSection } from "@/data/tech";
 import { reviewsSection, testimonials } from "@/data/testimonials";
 import type { ServiceCard, ServiceSlug, Tech } from "@/types/content";
 import type { Service } from "@/types/service";
+import { getCaseStudies as loadCaseStudies } from "@/lib/case-studies";
 import { icons } from "@/lib/icons";
+import { toCaseStudy } from "@/lib/portfolio";
 import { servicesSchema } from "@/lib/validation/service";
 
 /* Validate content once at module load, so bad data fails `next build` instead of a page. */
@@ -138,7 +141,10 @@ export async function getTechByIds(ids: string[]) {
 }
 
 export async function getCaseStudiesByService(slug: ServiceSlug, limit = 3) {
-  return caseStudies.filter((c) => c.services.includes(slug)).slice(0, limit);
+  return (await loadCaseStudies())
+    .filter((c) => c.services.includes(slug))
+    .slice(0, limit)
+    .map(toCaseStudy);
 }
 
 export async function getTestimonialForService(slug: ServiceSlug) {
@@ -149,8 +155,17 @@ export async function getAudiences() {
   return audienceSection;
 }
 
+/** Card copy plus every case study (from the MDX files), for the home page and service pages. */
 export async function getCaseStudies() {
-  return { section: workSection, caseStudies };
+  return { section: workSection, caseStudies: (await loadCaseStudies()).map(toCaseStudy) };
+}
+
+export async function getPortfolioPage() {
+  return portfolioPage;
+}
+
+export async function getCaseStudyPageCopy() {
+  return caseStudyPage;
 }
 
 export async function getProcess() {
@@ -195,4 +210,9 @@ export async function getMessages() {
 
 export async function getNotFound() {
   return notFound;
+}
+
+/** The review marked `featured`, for pages that quote one client. */
+export async function getFeaturedTestimonial() {
+  return testimonials.find((t) => t.featured) ?? testimonials[0];
 }

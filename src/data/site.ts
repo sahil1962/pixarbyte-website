@@ -20,7 +20,7 @@ export const siteConfig: SiteConfig = {
 export const header: HeaderContent = {
   nav: [
     { label: "Services", href: "/services" },
-    { label: "Work", href: "/#work" },
+    { label: "Work", href: "/portfolio" },
     { label: "Process", href: "/#process" },
     { label: "Pricing", href: "/#pricing" },
     { label: "FAQ", href: "/#faq" },
@@ -43,7 +43,7 @@ export const mobileMenu: MobileMenuContent = {
   closeAriaLabel: "Close menu",
   links: [
     { label: "Services", href: "/services" },
-    { label: "Work", href: "/#work" },
+    { label: "Work", href: "/portfolio" },
     { label: "Process", href: "/#process" },
     { label: "Pricing", href: "/#pricing" },
     { label: "FAQ", href: "/#faq" },
