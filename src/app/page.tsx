@@ -27,7 +27,7 @@ import {
   getWhyUs,
 } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
-import { websiteSchema } from "@/lib/schema";
+import { localBusinessSchema, websiteSchema } from "@/lib/schema";
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSiteConfig();
@@ -69,6 +69,7 @@ export default async function HomePage() {
       <Faq section={faq.section} faqs={faq.faqs} site={site} />
       <Cta content={cta} />
       <JsonLd data={websiteSchema(site)} />
+      <JsonLd data={localBusinessSchema(site)} />
     </>
   );
 }

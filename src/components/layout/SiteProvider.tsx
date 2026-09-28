@@ -51,6 +51,8 @@ interface SiteContextValue {
   /** "Book a call": Calendly when NEXT_PUBLIC_CALENDLY_URL is set, otherwise a placeholder dialog. */
   book(): void;
   bookingOpen: boolean;
+  /** True once the booking dialog has been asked for (it's loaded on first use). */
+  bookingUsed: boolean;
   closeBooking(): void;
   demo(): void;
 }
@@ -84,6 +86,7 @@ export function SiteProvider({
   const [commandOpen, setCommandOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [bookingSeen, setBookingSeen] = useState(false);
 
   const notify = useCallback((key: keyof Messages) => toast(messages[key]), [messages]);
 
@@ -107,7 +110,10 @@ export function SiteProvider({
     setEstimate((e) => ({ ...e, open: false }));
     const url = calendlyUrl();
     if (url) void openCalendly(url);
-    else setBookingOpen(true);
+    else {
+      setBookingSeen(true);
+      setBookingOpen(true);
+    }
   }, []);
 
   const value = useMemo<SiteContextValue>(
@@ -138,10 +144,23 @@ export function SiteProvider({
       toggleTheme,
       book,
       bookingOpen,
+      bookingUsed: bookingOpen || bookingSeen,
       closeBooking: () => setBookingOpen(false),
       demo: () => notify("demoLink"),
     }),
-    [messages, notify, audience, estimate, openEstimate, commandOpen, menuOpen, toggleTheme, book, bookingOpen],
+    [
+      messages,
+      notify,
+      audience,
+      estimate,
+      openEstimate,
+      commandOpen,
+      menuOpen,
+      toggleTheme,
+      book,
+      bookingOpen,
+      bookingSeen,
+    ],
   );
 
   return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;

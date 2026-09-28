@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+// No eval-based fast path: our Content Security Policy doesn't allow 'unsafe-eval', and
+// Zod's probe for it would otherwise log a CSP violation in the browser.
+z.config({ jitless: true });
+
 /**
  * The quote form's schema. The browser (React Hook Form) and the Server Action both
  * validate with this one schema, so the rules can't drift apart. Labels for each option

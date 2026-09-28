@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import { BookingDialog } from "@/components/layout/BookingDialog";
+import { Analytics } from "@/components/layout/Analytics";
 import { CommandMenu } from "@/components/layout/CommandMenu";
-import { EstimateDialog } from "@/components/layout/EstimateDialog";
+import { LazyOverlays } from "@/components/layout/LazyOverlays";
 import { GlowTracker } from "@/components/layout/GlowTracker";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { SiteProvider } from "@/components/layout/SiteProvider";
@@ -84,15 +83,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main id="main">{children}</main>
           <Footer content={footer} site={site} />
           <MobileMenu content={mobileMenu} site={site} />
-          <EstimateDialog content={estimator.content} model={estimator.model} projects={estimator.projects} />
-          <BookingDialog content={booking} />
+          <LazyOverlays
+            estimate={{ content: estimator.content, model: estimator.model, projects: estimator.projects }}
+            booking={{ content: booking }}
+          />
           <CommandMenu content={commandMenu} />
           <Toaster />
           <GlowTracker />
         </SiteProvider>
         <JsonLd data={organizationSchema(site)} />
       </body>
-      {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
+      {process.env.NEXT_PUBLIC_GA_ID && <Analytics id={process.env.NEXT_PUBLIC_GA_ID} />}
     </html>
   );
 }

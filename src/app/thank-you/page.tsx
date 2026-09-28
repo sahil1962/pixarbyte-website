@@ -39,7 +39,7 @@ export default async function ThankYouPage({ searchParams }: { searchParams: Pro
           </div>
           <h1
             id="thanks-title"
-            className="m-0 text-[clamp(28px,4vw,40px)] leading-tight font-semibold tracking-[-0.03em]"
+            className="m-0 min-h-0 max-w-none text-[clamp(28px,4vw,40px)] leading-tight font-semibold tracking-[-0.03em]"
           >
             {fill(page.title, { name: first ? `, ${first}` : "" })}
           </h1>

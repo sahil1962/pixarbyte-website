@@ -13,6 +13,8 @@ export const stats: Stat[] = [
 ];
 
 export const comparison: Comparison = {
+  caption: "How PixarByte compares with a large agency and a freelancer",
+  featureLabel: "What you get",
   columns: ["PixarByte", "Large agency", "Freelancer"],
   rows: [
     {

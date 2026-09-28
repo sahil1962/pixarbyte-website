@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { sendGAEvent } from "@next/third-parties/google";
+import { trackEvent } from "@/lib/analytics";
 import type { ServiceSlug } from "@/types/content";
 import type { FinderOption } from "@/types/service";
 import { Segmented } from "@/components/shared/Segmented";
@@ -24,7 +24,7 @@ export function ServiceFinder({
 
   function choose(value: string) {
     setNeed(value);
-    if (process.env.NEXT_PUBLIC_GA_ID) sendGAEvent("event", "service_finder", { need: value });
+    trackEvent("service_finder", { need: value });
   }
 
   return (

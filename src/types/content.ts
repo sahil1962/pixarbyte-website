@@ -374,6 +374,10 @@ export interface Stat {
 export type ComparisonCell = { kind: "yes" | "no" | "meh" | "strong"; text: string };
 
 export interface Comparison {
+  /** Names the scrollable table for screen readers. */
+  caption: string;
+  /** Screen-reader text for the empty top-left header cell. */
+  featureLabel: string;
   columns: [string, string, string];
   rows: { label: string; cells: [ComparisonCell, ComparisonCell, ComparisonCell] }[];
 }

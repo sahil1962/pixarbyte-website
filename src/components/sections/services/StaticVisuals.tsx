@@ -1,5 +1,6 @@
 import type { ServiceVisual } from "@/types/content";
 import { AutomationSwitch } from "./AutomationSwitch";
+import { avatarBackground } from "@/lib/color";
 
 /** Full-stack card: three layers that spread apart on hover (pure CSS). */
 export function StackVisual({ layers, badge }: Extract<ServiceVisual, { kind: "stack" }>) {
@@ -33,7 +34,7 @@ export function AutomationsVisual({ items }: Extract<ServiceVisual, { kind: "aut
     <div className="svc-vis vis-nocode">
       {items.map((a) => (
         <div className="auto-row" key={a.title}>
-          <span className="ai" style={{ background: a.color }}>
+          <span className="ai" style={{ background: avatarBackground(a.color) }}>
             {a.letter}
           </span>
           <span>

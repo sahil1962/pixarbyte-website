@@ -12,7 +12,13 @@ import { storageMode } from "@/lib/storage";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [{ page }, site] = await Promise.all([getContactPage(), getSiteConfig()]);
-  return buildMetadata({ title: page.seo.title, description: page.seo.description, path: "/contact", site });
+  return buildMetadata({
+    title: page.seo.title,
+    description: page.seo.description,
+    path: "/contact",
+    site,
+    image: null,
+  });
 }
 
 export default async function ContactPage() {

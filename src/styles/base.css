@@ -135,7 +135,7 @@ svg.i {
   border: 1px solid var(--border);
   border-radius: 4px;
   background: var(--muted);
-  color: var(--muted-foreground);
+  color: var(--muted-foreground-on-muted);
 }
 .seg {
   display: inline-flex;
@@ -152,7 +152,7 @@ svg.i {
   background: transparent;
   font-size: 13px;
   font-weight: 500;
-  color: var(--muted-foreground);
+  color: var(--muted-foreground-on-muted);
   cursor: pointer;
   transition:
     color 0.15s,
