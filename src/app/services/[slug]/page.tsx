@@ -26,6 +26,7 @@ import {
   getCaseStudiesByService,
   getFaqs,
   getFinalCta,
+  getPricingHref,
   getProcess,
   getServiceBySlug,
   getServiceCards,
@@ -80,6 +81,7 @@ export default async function ServicePage({ params }: Props) {
     getFinalCta(),
     getProcess(),
   ]);
+  const pricingHref = await getPricingHref(service.slug);
   const name = service.name.toLowerCase();
 
   // Sections with no data are left out; the rest alternate between plain and tinted bands.
@@ -162,7 +164,7 @@ export default async function ServicePage({ params }: Props) {
       key: "pricing",
       render: (tint) => (
         <PageSection id="pricing" title={copy.pricingSectionTitle} intro={copy.pricingSectionIntro} tint={tint}>
-          <UseCasesAndPrice service={service} copy={copy} />
+          <UseCasesAndPrice service={service} copy={{ ...copy, pricingHref }} />
         </PageSection>
       ),
     },

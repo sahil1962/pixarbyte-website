@@ -1140,7 +1140,6 @@ export const serviceDetail = {
   useCasesLead: "What clients most often ask us to build.",
   pricingTitle: "Starting price",
   pricingLink: "See all prices",
-  pricingHref: "/#pricing",
   faqTitle: "Questions, answered.",
   faqIntro: "Can't find what you need? We reply within two working hours.",
   testimonialLabel: "Client review",

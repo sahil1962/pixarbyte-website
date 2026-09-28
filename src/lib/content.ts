@@ -2,6 +2,7 @@
  * Content loaders. Pages and layout components read content only through these functions,
  * so moving to a CMS later means changing this file and nothing else.
  */
+import { aboutContent, certifications } from "@/data/about";
 import { builder } from "@/data/builder";
 import { workSection } from "@/data/case-studies";
 import { commandMenu } from "@/data/commands";
@@ -11,7 +12,15 @@ import { hero } from "@/data/hero";
 import { caseStudyPage, portfolioPage } from "@/data/portfolio";
 import { messages } from "@/data/messages";
 import { audienceSection, finalCta } from "@/data/home";
-import { estimateContent, estimateModel, pricingPlans, pricingSection } from "@/data/pricing";
+import {
+  engagementModels,
+  estimateContent,
+  estimateModel,
+  packageGroups,
+  pricingPage,
+  pricingPlans,
+  pricingSection,
+} from "@/data/pricing";
 import { processSection, processSteps } from "@/data/process";
 import {
   bundles,
@@ -25,6 +34,7 @@ import {
 import { header, mobileMenu, notFound, siteConfig } from "@/data/site";
 import { comparison, stats, whySection } from "@/data/stats";
 import { techCatalog, techRowIds, techSection } from "@/data/tech";
+import { team } from "@/data/team";
 import { reviewsSection, testimonials } from "@/data/testimonials";
 import type { ServiceCard, ServiceSlug, Tech } from "@/types/content";
 import type { Service } from "@/types/service";
@@ -215,4 +225,28 @@ export async function getNotFound() {
 /** The review marked `featured`, for pages that quote one client. */
 export async function getFeaturedTestimonial() {
   return testimonials.find((t) => t.featured) ?? testimonials[0];
+}
+
+export async function getPricingPage() {
+  return { page: pricingPage, models: engagementModels, groups: packageGroups };
+}
+
+/** Where a service's packages sit on /pricing, e.g. `/pricing#websites`. */
+export async function getPricingHref(slug: ServiceSlug) {
+  const group = packageGroups.find((g) => g.service === slug);
+  return group ? `/pricing#${group.id}` : "/pricing";
+}
+
+export async function getAbout() {
+  return aboutContent;
+}
+
+/** The team in display order, split into leaders and everyone else. */
+export async function getTeam() {
+  const sorted = [...team].sort((a, b) => a.order - b.order);
+  return { leaders: sorted.filter((m) => m.leadership), members: sorted.filter((m) => !m.leadership), all: sorted };
+}
+
+export async function getCertifications() {
+  return certifications;
 }

@@ -6,6 +6,7 @@ import { Icon } from "@/components/shared/Icon";
 import { Segmented } from "@/components/shared/Segmented";
 import { useSite } from "@/components/layout/SiteProvider";
 import { pixelBurst } from "@/lib/burst";
+import { estimate as calcEstimate } from "@/lib/estimator";
 import { easeOutCubic, fill, formatEstimate } from "@/lib/format";
 import { prefersReducedMotion, useModalDialog } from "@/lib/hooks";
 
@@ -56,10 +57,7 @@ export function EstimateDialog({
       shownSession.current = estimate.session;
       shownRange.current = [0, 0];
     }
-    let mid = model.base[type] * model.sizeMultiplier[size];
-    model.features[type].forEach((f) => {
-      if (feats.includes(f.id)) mid += f.price;
-    });
+    const { mid } = calcEstimate(model, { type, size, features: feats });
     const lo = mid * model.spread.low;
     const hi = mid * model.spread.high;
     const from = shownRange.current;
@@ -88,9 +86,8 @@ export function EstimateDialog({
     return () => cancelAnimationFrame(raf);
   }, [sentText]);
 
-  const weeks = model.weeks[type];
-  const m = model.sizeMultiplier[size];
-  const timeline = fill(content.timeline, { min: Math.round(weeks[0] * m), max: Math.round(weeks[1] * m) });
+  const { weeks } = calcEstimate(model, { type, size, features: feats });
+  const timeline = fill(content.timeline, { min: weeks[0], max: weeks[1] });
   const label = projects.find((p) => p.key === type)?.label ?? "";
 
   function onSubmit(e: FormEvent) {

@@ -18,7 +18,7 @@ export function SectionHead({
   const heading = (
     <>
       <h2 id={id}>{title}</h2>
-      <p>{intro}</p>
+      {intro && <p>{intro}</p>}
     </>
   );
 
