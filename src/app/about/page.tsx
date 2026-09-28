@@ -23,7 +23,13 @@ import { buildMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [about, site] = await Promise.all([getAbout(), getSiteConfig()]);
-  return buildMetadata({ title: about.seo.title, description: about.seo.description, path: "/about", site });
+  return buildMetadata({
+    title: about.seo.title,
+    description: about.seo.description,
+    path: "/about",
+    site,
+    image: null,
+  });
 }
 
 export default async function AboutPage() {

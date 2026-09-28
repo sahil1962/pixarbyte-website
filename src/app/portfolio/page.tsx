@@ -20,7 +20,13 @@ import { buildMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [page, site] = await Promise.all([getPortfolioPage(), getSiteConfig()]);
-  return buildMetadata({ title: page.seo.title, description: page.seo.description, path: "/portfolio", site });
+  return buildMetadata({
+    title: page.seo.title,
+    description: page.seo.description,
+    path: "/portfolio",
+    site,
+    image: null,
+  });
 }
 
 export default async function PortfolioPage() {

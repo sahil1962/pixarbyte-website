@@ -56,7 +56,17 @@ export const mobileMenu: MobileMenuContent = {
 
 /** 404 page. */
 export const notFound = {
-  title: "Page not found.",
-  text: "The page you're looking for doesn't exist or has moved.",
+  eyebrow: "Error 404",
+  title: "We couldn't find that page.",
+  text: "It may have moved, or the link might have a typo. Here are some good places to carry on.",
   cta: "Back to the home page",
+  secondary: "Get a free quote",
+  linksTitle: "Popular pages",
+  links: [
+    { label: "Our services", href: "/services", detail: "Websites, apps, no-code and cloud" },
+    { label: "Our work", href: "/portfolio", detail: "Case studies from London clients" },
+    { label: "Pricing", href: "/pricing", detail: "Fixed prices in GBP" },
+    { label: "About us", href: "/about", detail: "Who we are and how we work" },
+  ],
+  searchHint: "Or press / to search the site.",
 };

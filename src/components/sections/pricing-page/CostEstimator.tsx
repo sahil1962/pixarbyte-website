@@ -1,6 +1,6 @@
 "use client";
 
-import { sendGAEvent } from "@next/third-parties/google";
+import { trackEvent } from "@/lib/analytics";
 import Link from "next/link";
 import { useState } from "react";
 import type { BuilderProject, EstimateModel, ProjectSize, ProjectType } from "@/types/content";
@@ -31,8 +31,7 @@ export function CostEstimator({
   const featureLabels = model.features[type].filter((f) => features.includes(f.id)).map((f) => f.label);
 
   function onCta() {
-    if (process.env.NEXT_PUBLIC_GA_ID)
-      sendGAEvent("event", "estimator_complete", { type, low: result.low, high: result.high });
+    trackEvent("estimator_complete", { type, low: result.low, high: result.high });
   }
   // /contact recalculates the range from these inputs rather than trusting a price in the URL.
   const quoteHref = `/contact?type=${type}&size=${size}&features=${encodeURIComponent(features.join(","))}&estimate=1`;

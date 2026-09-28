@@ -2,6 +2,7 @@ import type { ReviewsSectionContent, Testimonial } from "@/types/content";
 import { SectionHead } from "@/components/shared/SectionHead";
 import { Stars } from "@/components/shared/Stars";
 import { initials } from "@/lib/format";
+import { avatarBackground } from "@/lib/color";
 
 /** "What clients say": rating summary plus a masonry of reviews. */
 export function Reviews({ section, testimonials }: { section: ReviewsSectionContent; testimonials: Testimonial[] }) {
@@ -28,7 +29,7 @@ export function Reviews({ section, testimonials }: { section: ReviewsSectionCont
               <Stars label={section.starsAriaLabel} />
               <blockquote>{`“${r.quote}”`}</blockquote>
               <figcaption className="who">
-                <span style={{ background: r.color }}>{initials(r.name)}</span>
+                <span style={{ background: avatarBackground(r.color) }}>{initials(r.name)}</span>
                 <div>
                   <strong>{r.name}</strong>
                   <small>{r.role}</small>

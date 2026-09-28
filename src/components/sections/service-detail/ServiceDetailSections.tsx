@@ -8,6 +8,7 @@ import { formatGBP, initials } from "@/lib/format";
 import { ContentIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { ServiceVisual } from "../services/ServiceVisual";
+import { avatarBackground } from "@/lib/color";
 
 /** Hero right-hand column: the service's live illustration with its starting price. */
 export function ServiceHeroCard({ service, fromLabel }: { service: Service; fromLabel: string }) {
@@ -200,7 +201,7 @@ export function ServiceTestimonial({ t, starsLabel }: { t: Testimonial; starsLab
       <Stars label={starsLabel} />
       <blockquote>{`“${t.quote}”`}</blockquote>
       <figcaption className="who">
-        <span style={{ background: t.color }}>{initials(t.name)}</span>
+        <span style={{ background: avatarBackground(t.color) }}>{initials(t.name)}</span>
         <div>
           <strong>{t.name}</strong>
           <small>{t.role}</small>

@@ -7,6 +7,8 @@
   --muted: #f4f4f5;
   --muted-2: #fafafa;
   --muted-foreground: #71717a;
+  /* Muted text on the grey --muted surface (segmented controls, key hints): 4.8:1 (WCAG AA). */
+  --muted-foreground-on-muted: #6b6b74;
   --border: #e4e4e7;
   --input: #e4e4e7;
   --primary: #18181b;
@@ -39,6 +41,7 @@
     --muted: #18181b;
     --muted-2: #111114;
     --muted-foreground: #a1a1aa;
+    --muted-foreground-on-muted: #a1a1aa;
     --border: #27272a;
     --input: #27272a;
     --primary: #fafafa;
@@ -66,6 +69,7 @@
   --muted: #18181b;
   --muted-2: #111114;
   --muted-foreground: #a1a1aa;
+  --muted-foreground-on-muted: #a1a1aa;
   --border: #27272a;
   --input: #27272a;
   --primary: #fafafa;

@@ -1,7 +1,7 @@
 "use client";
 
+import { trackEvent } from "@/lib/analytics";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sendGAEvent } from "@next/third-parties/google";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState, useTransition, type ReactNode } from "react";
 import { useForm, useWatch, type UseFormReturn } from "react-hook-form";
@@ -130,6 +130,8 @@ export function QuoteForm({
   const [turnstileReset, setTurnstileReset] = useState(0);
   const status = useRef<HTMLDivElement>(null);
   const started = useRef(false);
+  // Cloudflare's script loads once the visitor starts the form, not with the page.
+  const [engaged, setEngaged] = useState(false);
 
   const form = useForm<QuoteFormValues, unknown, QuoteInput>({
     resolver: zodResolver(quoteSchema),
@@ -152,7 +154,8 @@ export function QuoteForm({
   function onFirstFocus() {
     if (started.current) return;
     started.current = true;
-    if (process.env.NEXT_PUBLIC_GA_ID) sendGAEvent("event", "quote_form_start");
+    setEngaged(true);
+    trackEvent("quote_form_start");
   }
 
   function onSubmit(values: QuoteInput) {
@@ -165,8 +168,7 @@ export function QuoteForm({
         res = { ok: false, error: copy.genericError };
       }
       if (res.ok) {
-        if (process.env.NEXT_PUBLIC_GA_ID)
-          sendGAEvent("event", "quote_form_submit", { services: values.services.join(","), budget: values.budget });
+        trackEvent("quote_form_submit", { services: values.services.join(","), budget: values.budget });
         const first = values.name.trim().split(/\s+/)[0] ?? "";
         router.push(`/thank-you?name=${encodeURIComponent(first)}`);
         return;
@@ -190,6 +192,7 @@ export function QuoteForm({
       noValidate
       onSubmit={(e) => void handleSubmit(onSubmit)(e)}
       onFocus={onFirstFocus}
+      onPointerDown={onFirstFocus}
       aria-labelledby="quote-title"
     >
       <Suspense fallback={null}>
@@ -442,6 +445,7 @@ export function QuoteForm({
 
         <div>
           <Turnstile
+            load={engaged || isSubmitted}
             resetKey={turnstileReset}
             onToken={(t) => setValue("turnstileToken", t, { shouldValidate: !!t && isSubmitted })}
           />

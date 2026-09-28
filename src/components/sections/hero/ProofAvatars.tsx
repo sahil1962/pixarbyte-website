@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import type { HeroContent } from "@/types/content";
 import { initials } from "@/lib/format";
+import { avatarBackground } from "@/lib/color";
 
 /** Client avatars beside the rating. Hover, focus or tap one to read their review in a hovercard. */
 export function ProofAvatars({ proof, children }: { proof: HeroContent["proof"]; children: ReactNode }) {
@@ -44,7 +45,7 @@ export function ProofAvatars({ proof, children }: { proof: HeroContent["proof"];
                 buttons.current[i] = el;
               }}
               type="button"
-              style={{ background: r.color }}
+              style={{ background: avatarBackground(r.color) }}
               data-q={i}
               aria-label={`${proof.reviewAriaPrefix} ${r.name}`}
               onMouseEnter={() => show(i)}
@@ -59,12 +60,17 @@ export function ProofAvatars({ proof, children }: { proof: HeroContent["proof"];
         </div>
         {children}
       </div>
-      <div className={card?.show ? "hovercard show" : "hovercard"} id="hovercard" role="tooltip" ref={hovercard}>
+      <div
+        className={card?.show ? "hovercard show" : "hovercard"}
+        id="hovercard"
+        role={review ? "tooltip" : undefined}
+        ref={hovercard}
+      >
         {review && (
           <>
             <p>{`“${review.quote}”`}</p>
             <div className="who">
-              <span style={{ background: review.color }}>{initials(review.name)}</span>
+              <span style={{ background: avatarBackground(review.color) }}>{initials(review.name)}</span>
               <div>
                 <strong>{review.name}</strong>
                 <small>{review.role}</small>

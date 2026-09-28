@@ -27,7 +27,13 @@ import type { ServiceSlug } from "@/types/content";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [page, site] = await Promise.all([getServicesPage(), getSiteConfig()]);
-  return buildMetadata({ title: page.seo.title, description: page.seo.description, path: "/services", site });
+  return buildMetadata({
+    title: page.seo.title,
+    description: page.seo.description,
+    path: "/services",
+    site,
+    image: null,
+  });
 }
 
 export default async function ServicesPage() {

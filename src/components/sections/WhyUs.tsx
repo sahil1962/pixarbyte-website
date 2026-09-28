@@ -36,11 +36,13 @@ export function WhyUs({ section, stats, comparison }: { section: SectionCopy; st
         <div className="why-grid">
           <StatGrid stats={stats} />
           <div className="compare">
-            <div className="compare-scroll">
+            <div className="compare-scroll" tabIndex={0} role="region" aria-label={comparison.caption}>
               <table>
                 <thead>
                   <tr>
-                    <th scope="col">&nbsp;</th>
+                    <th scope="col">
+                      <span className="sr-only">{comparison.featureLabel}</span>
+                    </th>
                     <th scope="col" className="us">
                       {us}
                     </th>

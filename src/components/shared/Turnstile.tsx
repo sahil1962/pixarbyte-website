@@ -30,8 +30,11 @@ export function Turnstile({
   resetKey = 0,
   fallbackNote,
   className,
+  load = true,
 }: {
   onToken(token: string): void;
+  /** Set false to hold off loading Cloudflare's script (e.g. until the visitor starts the form). */
+  load?: boolean;
   resetKey?: number;
   fallbackNote?: string;
   className?: string;
@@ -75,13 +78,13 @@ export function Turnstile({
 
   // If the script never arrives (blocked without an error event), fall back after a while.
   useEffect(() => {
-    if (!isTest) return;
+    if (!isTest || !load) return;
     const t = window.setTimeout(() => {
       if (!widget.current) fallBack();
     }, 10_000);
     return () => window.clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isTest]);
+  }, [isTest, load]);
 
   // A new token after each failed submit.
   useEffect(() => {
@@ -104,7 +107,7 @@ export function Turnstile({
 
   return (
     <>
-      <Script src={SRC} strategy="lazyOnload" onReady={renderWidget} onError={fallBack} />
+      {load && <Script src={SRC} strategy="lazyOnload" onReady={renderWidget} onError={fallBack} />}
       <div ref={box} className={className} />
       {fallback && fallbackNote && <p className="ctrl-note m-0">{fallbackNote}</p>}
     </>

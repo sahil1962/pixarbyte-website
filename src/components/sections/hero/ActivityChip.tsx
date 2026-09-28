@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { ActivityItem } from "@/types/content";
 import { prefersReducedMotion } from "@/lib/hooks";
+import { avatarBackground } from "@/lib/color";
 
 /** Floating "recent activity" chip under the builder; cycles through updates. */
 export function ActivityChip({ items }: { items: ActivityItem[] }) {
@@ -28,7 +29,7 @@ export function ActivityChip({ items }: { items: ActivityItem[] }) {
   const item = items[index];
   return (
     <div className="fchip fchip-feed" aria-live="off">
-      <span className="feed-av" id="feed-av" style={{ background: item.color }}>
+      <span className="feed-av" id="feed-av" style={{ background: avatarBackground(item.color) }}>
         {item.initials}
       </span>
       <div className={out ? "feed-body out" : "feed-body"} id="feed-body">

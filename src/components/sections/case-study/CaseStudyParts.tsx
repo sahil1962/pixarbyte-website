@@ -9,7 +9,7 @@ import { resultToStat } from "@/lib/portfolio";
 export function CoverImage({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-border bg-card">
-      <Image src={src} alt={alt} fill priority sizes="(min-width: 1100px) 520px, (min-width: 860px) 45vw, 100vw" />
+      <Image src={src} alt={alt} fill preload sizes="(min-width: 1100px) 520px, (min-width: 860px) 45vw, 100vw" />
     </div>
   );
 }
