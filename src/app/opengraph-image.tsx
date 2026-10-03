@@ -8,5 +8,5 @@ export const contentType = "image/png";
 /** Default share image. */
 export default async function Image() {
   const site = await getSiteConfig();
-  return renderOgImage({ brand: site.name, title: site.description });
+  return renderOgImage({ wordmark: site.wordmark, title: site.description });
 }

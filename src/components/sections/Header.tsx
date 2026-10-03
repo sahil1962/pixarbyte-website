@@ -7,7 +7,7 @@ export function Header({ content, site, services }: { content: HeaderContent; si
   return (
     <header className="nav" id="top">
       <div className="nav-inner">
-        <Brand name={site.name} ariaLabel={site.brandAriaLabel} href="/" />
+        <Brand wordmark={site.wordmark} ariaLabel={site.brandAriaLabel} href="/" />
         <NavLinks
           links={content.nav}
           label={content.navLabel}
