@@ -10,6 +10,7 @@ export function organizationSchema(site: SiteConfig) {
     name: site.name,
     legalName: site.legalName,
     url: site.url,
+    logo: `${site.url}/brand/pixarbyte-mark-512.png`,
     email: site.email,
     telephone: site.phone.display,
     address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" },
@@ -118,7 +119,7 @@ export function aboutPageSchema(site: SiteConfig, leaders: TeamMember[], teamSiz
       "@type": "Organization",
       name: site.name,
       url: site.url,
-      logo: `${site.url}/icon.svg`,
+      logo: `${site.url}/brand/pixarbyte-mark-512.png`,
       // Left out until the real founding year replaces the placeholder.
       ...(/^\d{4}$/.test(foundingDate) ? { foundingDate } : {}),
       founder: leaders.map((l) => ({
@@ -147,7 +148,7 @@ export function localBusinessSchema(site: SiteConfig) {
     email: site.email,
     telephone: site.phone.display,
     image: `${site.url}/opengraph-image`,
-    logo: `${site.url}/icon.svg`,
+    logo: `${site.url}/brand/pixarbyte-mark-512.png`,
     priceRange: "££",
     currenciesAccepted: "GBP",
     address: {

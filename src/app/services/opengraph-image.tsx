@@ -9,7 +9,7 @@ export const contentType = "image/png";
 export default async function Image() {
   const [page, site] = await Promise.all([getServicesPage(), getSiteConfig()]);
   return renderOgImage({
-    brand: site.name,
+    wordmark: site.wordmark,
     eyebrow: "Services",
     title: page.hero.title,
     detail: "Websites, apps, no-code and cloud · London",

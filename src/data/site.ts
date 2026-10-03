@@ -14,6 +14,7 @@ export const siteConfig: SiteConfig = {
   location: "London, United Kingdom",
   companyNumber: "00000000",
   brandAriaLabel: "PixarByte home",
+  wordmark: "ixarByte",
   skipLink: "Skip to content",
 };
 

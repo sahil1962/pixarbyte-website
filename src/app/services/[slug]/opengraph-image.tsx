@@ -14,9 +14,9 @@ export async function generateStaticParams() {
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const [service, site, copy] = await Promise.all([getServiceBySlug(slug), getSiteConfig(), getServiceDetailCopy()]);
-  if (!service) return renderOgImage({ brand: site.name, title: site.description });
+  if (!service) return renderOgImage({ wordmark: site.wordmark, title: site.description });
   return renderOgImage({
-    brand: site.name,
+    wordmark: site.wordmark,
     eyebrow: service.name,
     title: service.hero.heading,
     detail: `${copy.fromLabel} ${formatGBP(service.pricingHint.from)}`,
