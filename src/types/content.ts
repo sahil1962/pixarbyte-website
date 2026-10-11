@@ -87,6 +87,8 @@ export interface SiteConfig {
   location: string;
   companyNumber: string;
   brandAriaLabel: string;
+  /** The logo's text beside the "p" mark: the name without its first letter. */
+  wordmark: string;
   skipLink: string;
 }
 

@@ -15,11 +15,11 @@ export async function generateStaticParams() {
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const [cs, site, copy] = await Promise.all([getCaseStudy(slug), getSiteConfig(), getCaseStudyPageCopy()]);
-  if (!cs) return renderOgImage({ brand: site.name, title: site.description });
+  if (!cs) return renderOgImage({ wordmark: site.wordmark, title: site.description });
   const { meta } = cs;
   const lead = meta.results[0];
   return renderOgImage({
-    brand: site.name,
+    wordmark: site.wordmark,
     eyebrow: fill(copy.seoTitle, { client: meta.confidential ? copy.confidentialClient : meta.client }),
     title: meta.title,
     detail: lead && `${lead.value} ${lead.label}`,

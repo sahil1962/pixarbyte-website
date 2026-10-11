@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { MobileMenuContent, SiteConfig } from "@/types/content";
-import { BrandMark } from "@/components/shared/Brand";
+import { Brand } from "@/components/shared/Brand";
 import { Icon } from "@/components/shared/Icon";
 import { useSite } from "@/components/layout/SiteProvider";
 import { useModalDialog } from "@/lib/hooks";
@@ -25,10 +25,7 @@ export function MobileMenu({ content, site }: { content: MobileMenuContent; site
       }}
     >
       <div className="menu-top">
-        <Link className="brand" href="/" aria-label={site.brandAriaLabel} onClick={close}>
-          <BrandMark />
-          {site.name}
-        </Link>
+        <Brand wordmark={site.wordmark} ariaLabel={site.brandAriaLabel} href="/" onClick={close} />
         <button className="btn btn-ghost btn-icon" type="button" aria-label={content.closeAriaLabel} onClick={close}>
           <Icon name="x" />
         </button>

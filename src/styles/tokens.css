@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #09090b;
+  /* Wordmark grey from the logo artwork. */
+  --brand-text: #58595b;
   --card: #ffffff;
   --muted: #f4f4f5;
   --muted-2: #fafafa;
@@ -37,6 +39,7 @@
   :root:not([data-theme="light"]) {
     --background: #09090b;
     --foreground: #fafafa;
+    --brand-text: #fafafa;
     --card: #0c0c0f;
     --muted: #18181b;
     --muted-2: #111114;
@@ -65,6 +68,7 @@
 :root[data-theme="dark"] {
   --background: #09090b;
   --foreground: #fafafa;
+  --brand-text: #fafafa;
   --card: #0c0c0f;
   --muted: #18181b;
   --muted-2: #111114;

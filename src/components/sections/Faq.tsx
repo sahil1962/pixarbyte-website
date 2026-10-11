@@ -21,7 +21,7 @@ export function Faq({
         <div className="faq-side">
           <SectionHead id="faq-title" title={section.title} intro={section.intro} />
           <div className="faq-contact">
-            <BrandMark style={{ width: 34, height: 34, borderRadius: 9, flex: "none" }} />
+            <BrandMark size={34} className="shrink-0" />
             <p>
               {site.email}
               <small>{`${section.phonePrefix} ${site.phone.display}`}</small>

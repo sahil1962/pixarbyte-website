@@ -28,7 +28,7 @@ export function Footer({ content, site }: { content: FooterContent; site: SiteCo
       <div className="container">
         <div className="foot-grid">
           <div className="foot-brand">
-            <Brand name={site.name} ariaLabel={site.brandAriaLabel} href="/" />
+            <Brand wordmark={site.wordmark} ariaLabel={site.brandAriaLabel} href="/" />
             <p>{content.blurb}</p>
             <NewsletterForm content={content.newsletter} />
             <div className="socials">

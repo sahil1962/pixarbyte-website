@@ -1,23 +1,30 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { ImageResponse } from "next/og";
+
+/** The logo's "p" mark, inlined so share images need no network fetch. */
+const mark = `data:image/svg+xml;base64,${readFileSync(
+  path.join(process.cwd(), "public/brand/pixarbyte-mark.svg"),
+).toString("base64")}`;
 
 export const ogSize = { width: 1200, height: 630 };
 
-/** Share image in the design's dark palette: brand mark, an eyebrow, a title and a detail line. */
+/** Share image in the design's dark palette: logo, an eyebrow, a title and a detail line. */
 export function renderOgImage({
-  brand,
+  wordmark,
   eyebrow,
   title,
   detail,
   colors,
 }: {
-  brand: string;
+  /** Text beside the "p" mark ("ixarByte"), so the lockup reads "PixarByte". */
+  wordmark: string;
   eyebrow?: string;
   title: string;
   detail?: string;
   /** Two colours for a gradient band along the bottom edge (a case study's palette). */
   colors?: [string, string];
 }) {
-  const cell = (color: string) => <div style={{ width: 22, height: 22, borderRadius: 5, background: color }} />;
   return new ImageResponse(
     <div
       style={{
@@ -44,25 +51,11 @@ export function renderOgImage({
           }}
         />
       )}
-      <div style={{ display: "flex", alignItems: "center", gap: 20, fontSize: 36, fontWeight: 600 }}>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            width: 96,
-            height: 96,
-            padding: 22,
-            gap: 8,
-            borderRadius: 26,
-            background: "#fafafa",
-          }}
-        >
-          {cell("#18181b")}
-          {cell("#18181b")}
-          {cell("#18181b")}
-          {cell("#3b82f6")}
-        </div>
-        {brand}
+      {/* Logo lockup: the mark drops below the text baseline like a lowercase p. */}
+      <div style={{ display: "flex", alignItems: "flex-end", fontSize: 60, fontWeight: 500, letterSpacing: -1.2 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={mark} width={66} height={66} alt="" style={{ marginRight: 4 }} />
+        <div style={{ display: "flex", lineHeight: 1, marginBottom: 4 }}>{wordmark}</div>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
         {eyebrow && <div style={{ fontSize: 30, color: "#a1a1aa" }}>{eyebrow}</div>}
